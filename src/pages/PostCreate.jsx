@@ -55,6 +55,29 @@ const PostCreate = () => {
       post: {
         title: title,
         content: content,
+        is_published: true,
+      },
+      tags: tags,
+      category: selectedCategory,
+    };
+    axios
+      .post(`http://localhost:3000/api/v1/posts`, params)
+      .then((response) => {
+        if (response.status == 200) {
+          console.log("Title:", title);
+
+          console.log("記事の投稿成功");
+        }
+      });
+  };
+
+  const handleDraftSave = () => {
+    // ここに投稿を保存する処理を追加
+    const params = {
+      post: {
+        title: title,
+        content: content,
+        is_published: false,
       },
       tags: tags,
       category: selectedCategory,
@@ -92,6 +115,13 @@ const PostCreate = () => {
             ブログ記事投稿{" "}
             <Button variant="contained" color="primary" onClick={handleSave}>
               保存
+            </Button>
+            <Button
+              variant="contained"
+              color="success"
+              onClick={handleDraftSave}
+            >
+              下書き保存
             </Button>
           </Typography>
 
