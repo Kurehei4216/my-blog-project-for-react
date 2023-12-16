@@ -3,8 +3,8 @@ import Layout from "./pages/Layout";
 import Home from "./pages/Home";
 import PostCreate from "./pages/PostCreate";
 import AdminTop from "./pages/AdminTop";
-import AdminLayout from "./pages/Admin/AdminLayout";
-import Example from "./pages/Admin/Example";
+import AdminLayout from "./pages/Admin/Layout";
+import AdminPostList from "./pages/Admin/PostList";
 
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
@@ -23,10 +23,10 @@ function App() {
           />
           <Route path="/post/create" element={<PostCreate />} />
           <Route
-            path="/admin/"
+            path="/admin/posts"
             element={
               <AdminLayout>
-                <Example />
+                <AdminPostList />
               </AdminLayout>
             }
           />

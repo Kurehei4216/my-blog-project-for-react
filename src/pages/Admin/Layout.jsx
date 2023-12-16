@@ -17,7 +17,7 @@ import Link from "@mui/material/Link";
 import MenuIcon from "@mui/icons-material/Menu";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import NotificationsIcon from "@mui/icons-material/Notifications";
-import { mainListItems, secondaryListItems } from "./../../components/ListItem";
+import { mainListItems, secondaryListItems } from "../../components/ListItem";
 
 function Copyright(props) {
   return (
@@ -86,7 +86,7 @@ const Drawer = styled(MuiDrawer, {
 // TODO remove, this demo shouldn't need to reset the theme.
 const defaultTheme = createTheme();
 
-export default function AdminLayout({ children }) {
+export default function Layout({ children }) {
   const [open, setOpen] = React.useState(true);
   const toggleDrawer = () => {
     setOpen(!open);
@@ -163,10 +163,10 @@ export default function AdminLayout({ children }) {
           }}
         >
           <Toolbar />
-          <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
+          <Grid container sx={{pr: 2, pl:2,  mt: 4, mb: 4 }}>
             {children}
             <Copyright sx={{ pt: 4 }} />
-          </Container>
+          </Grid>
         </Box>
       </Box>
     </ThemeProvider>
