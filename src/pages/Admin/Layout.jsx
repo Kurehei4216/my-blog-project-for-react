@@ -121,7 +121,7 @@ export default function Layout({ children }) {
               noWrap
               sx={{ flexGrow: 1 }}
             >
-              Dashboard
+              クレヘイブログ(管理画面)
             </Typography>
             <IconButton color="inherit">
               <Badge badgeContent={4} color="secondary">

@@ -22,6 +22,7 @@ import { visuallyHidden } from '@mui/utils';
 import { useEffect, useState } from 'react';
 import axios from "axios";
 import { getDateFormatByFormat } from '../../util/Date'
+import { useNavigate } from 'react-router-dom';
 
 
 const fetchPosts = async () => {
@@ -222,7 +223,12 @@ export default function EnhancedTable() {
   const [selected, setSelected] = useState([]);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
+  const history = useNavigate();
 
+
+  const handleRedirectWithParameter = (postId) => {
+    history(`/admin/post/${postId}`); // パスパラメータを含めてリダイレクト
+  }
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
@@ -325,6 +331,7 @@ export default function EnhancedTable() {
                       />
                     </TableCell>
                     <TableCell
+                      onClick={() => { handleRedirectWithParameter(row.id) }}
                       component="th"
                       id={labelId}
                       scope="row"

@@ -8,6 +8,7 @@ import {
 import { styled } from "@mui/material/styles";
 import MenuIcon from "@mui/icons-material/Menu";
 import { useEffect, useCallback, useState } from "react";
+import { useNavigate } from 'react-router-dom';
 
 const drawerWidth = 300;
 
@@ -23,8 +24,12 @@ const useStyles = styled((theme) => ({
 
 const SideBar = () => {
   const classes = useStyles();
-
   const [open, setOpen] = useState(false);
+  const history = useNavigate();
+
+  const handleRedirectToPostList= (postId) => {
+    history(`/admin/posts/`); // パスパラメータを含めてリダイレクト
+  }
 
   const handleDrawerOpen = () => {
     setOpen(true);
