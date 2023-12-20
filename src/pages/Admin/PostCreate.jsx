@@ -19,14 +19,15 @@ const PostCreate = () => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [categories, setCategories] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState('0');
 
   const fetchCategories = async () => {
     try {
       await axios
         .get(`http://localhost:3000/api/v1/categories`)
         .then((data) => {
-          setCategories(data.data);
+          const array = [{ id: '0', name: 'カテゴリーを選んでね' }]
+          setCategories(data.data.concat(array));
         });
     } catch (e) {
       console.log(e);
@@ -112,13 +113,14 @@ const PostCreate = () => {
         <div>
           <Typography variant="h4" component="div" gutterBottom>
             ブログ記事投稿{" "}
-            <Button variant="contained" color="primary" onClick={handleSave}>
+            <Button variant="outlined" color="primary" onClick={handleSave} style={{ marginRight: '5px', padding: '7px'}}>
               保存
             </Button>
             <Button
-              variant="contained"
+              variant="outlined"
               color="success"
               onClick={handleDraftSave}
+              style={{ padding: '7px'}}
             >
               下書き保存
             </Button>
@@ -138,7 +140,6 @@ const PostCreate = () => {
 
             {/* タグ入力画面 */}
             <Grid item xs={12}>
-              <p>タグ</p>
               <TextField
                 label="タグ"
                 fullWidth
@@ -160,7 +161,6 @@ const PostCreate = () => {
               ))}
             </Grid>
             <Grid item xs={4}>
-              <p>カテゴリー</p>
               <FormControl
                 style={{
                   minWidth: "100%",
@@ -188,7 +188,7 @@ const PostCreate = () => {
               <TextField
                 label="本文"
                 multiline
-                rows={6}
+                rows={15}
                 fullWidth
                 variant="outlined"
                 value={content}
