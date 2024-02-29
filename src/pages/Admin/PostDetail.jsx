@@ -6,15 +6,20 @@ import {
   Grid,
   Typography,
   CssBaseline,
-  FormControl,
   Card,
   CardContent
 } from "@mui/material";
+import IconButton from "@mui/material/IconButton";
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
+import { useNavigate } from 'react-router-dom';
+
 
 const PostDetail = () => {
   const { postId } = useParams()
   const [post, setPost] = useState({})
   const [tags, setTags] = useState([])
+  const history = useNavigate();
 
   const fetchPost = async () => {
     try {
@@ -37,57 +42,58 @@ const PostDetail = () => {
         console.log(e);
       }
     };
-
     fetchData();
   }, []);
 
+  const handleRedirectToPostEdit = () => {
+    history(`/admin/post/${postId}/edit`);
+  }
+
   return (
     <>
- <Grid container direction="column">
-        <CssBaseline />
+    <Grid container direction="column">
+      <CssBaseline />
+      <div>
+        <Grid container spacing={2}>
+          {/* 本文入力画面 */}
+          <Grid item xs={9} spacing={3}>
 
-        <div>
-          <Typography variant="h4" component="div" gutterBottom align="center">
-            {post.title}{" "}
-          </Typography>
-
-          <Grid item xs={12}>
-              {tags.map((tag, index) => (
-                <Chip
-                  key={tag.id}
-                  label={tag.name}
-                  style={{ margin: "4px" }}
-                />
-              ))}
-            </Grid>
-
-          <Grid container spacing={2}>
-
-            <Grid item xs={4}>
-              <FormControl
-                style={{
-                  minWidth: "100%",
-                  backgroundColor: "white",
-                  color: "black",
-                }}
-              >
-              </FormControl>
-            </Grid>
-
-            {/* 本文入力画面 */}
-            <Grid item xs={12}>
             <Card style={{ marginBottom: 8 }}>
               <CardContent>
+                <IconButton
+                  size="large"
+                  style={{ marginLeft: 800 }}
+                  onClick={() => { handleRedirectToPostEdit(post.id) }}
+                >
+                  <EditIcon fontSize="inherit"/>
+                </IconButton>
+                <IconButton
+                  size="large"
+                >
+                  <DeleteIcon fontSize="inherit"/>
+                </IconButton>
+                <Typography variant="h4" component="div" gutterBottom align="center">
+                  {post.title}{" "}
+                </Typography>
+
+                {tags.map((tag, index) => (
+                  <Chip
+                    key={tag.id}
+                    label={tag.name}
+                    style={{ margin: "4px" }}
+                  />
+                ))}
+                <h3>本文</h3>
                 <p>{post.content}</p>
 
               </CardContent>
             </Card>
-            </Grid>
           </Grid>
-        </div>
-      </Grid>
-      </>
-  )
+        </Grid>
+        <Grid item xs={2} spacing={3}></Grid>
+      </div>
+    </Grid>
+  </>)
 }
 
 export default PostDetail
