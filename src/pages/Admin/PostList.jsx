@@ -23,7 +23,7 @@ import { useEffect, useState } from 'react';
 import axios from "axios";
 import { getDateFormatByFormat } from '../../util/Date'
 import { useNavigate } from 'react-router-dom';
-
+import EditIcon from '@mui/icons-material/Edit';
 
 const fetchPosts = async () => {
     try {
@@ -93,16 +93,10 @@ const headCells = [
     label: '最終更新日',
   },
   {
-    id: 'carbs',
+    id: 'button',
     numeric: true,
     disablePadding: false,
-    label: 'タグ',
-  },
-  {
-    id: 'protein',
-    numeric: true,
-    disablePadding: false,
-    label: 'カテゴリー',
+    label: '',
   },
 ];
 
@@ -226,9 +220,8 @@ export default function EnhancedTable() {
   const history = useNavigate();
 
 
-  const handleRedirectWithParameter = (postId) => {
-    history(`/admin/post/${postId}`); // パスパラメータを含めてリダイレクト
-  }
+  const handleRedirectWithParameter = (postId) => history(`/admin/post/${postId}`);
+  const handleRedirectToPostEdit = (postId) => history(`/admin/post/${postId}/edit`);
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
@@ -275,7 +268,6 @@ export default function EnhancedTable() {
 
   const isSelected = (id) => selected.indexOf(id) !== -1;
 
-  // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows =
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
 
@@ -341,8 +333,20 @@ export default function EnhancedTable() {
                     </TableCell>
                     <TableCell align="right">{row.is_publish ? '公開' : '下書き'}</TableCell>
                     <TableCell align="right">{row.updated_at}</TableCell>
-                    <TableCell align="right">{row.carbs}</TableCell>
-                    <TableCell align="right">{row.protein}</TableCell>
+                    <TableCell align="right">
+                      <IconButton
+                        size="medium"
+                        onClick={() => { handleRedirectToPostEdit(row.id) }}
+                      >
+                        <EditIcon fontSize="inherit"/>
+                      </IconButton>
+                      <IconButton
+                        size="medium"
+                        onClick={() => { }}
+                      >
+                        <DeleteIcon fontSize="inherit"/>
+                      </IconButton>
+                    </TableCell>
                   </TableRow>
                 );
               })}

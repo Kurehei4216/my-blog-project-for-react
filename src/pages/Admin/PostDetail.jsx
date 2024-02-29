@@ -45,10 +45,6 @@ const PostDetail = () => {
     fetchData();
   }, []);
 
-  const handleRedirectToPostEdit = () => {
-    history(`/admin/post/${postId}/edit`);
-  }
-
   return (
     <>
     <Grid container direction="column">
@@ -60,18 +56,6 @@ const PostDetail = () => {
 
             <Card style={{ marginBottom: 8 }}>
               <CardContent>
-                <IconButton
-                  size="large"
-                  style={{ marginLeft: 800 }}
-                  onClick={() => { handleRedirectToPostEdit(post.id) }}
-                >
-                  <EditIcon fontSize="inherit"/>
-                </IconButton>
-                <IconButton
-                  size="large"
-                >
-                  <DeleteIcon fontSize="inherit"/>
-                </IconButton>
                 <Typography variant="h4" component="div" gutterBottom align="center">
                   {post.title}{" "}
                 </Typography>
