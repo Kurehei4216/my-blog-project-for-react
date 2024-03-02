@@ -5,6 +5,7 @@ import PostCreate from "./pages/Admin/PostCreate";
 import AdminPostDetail from "./pages/Admin/PostDetail";
 import AdminLayout from "./pages/Admin/Layout";
 import AdminPostList from "./pages/Admin/PostList";
+import AdminPostEdit from "./pages/Admin/PostEdit";
 
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
@@ -29,11 +30,19 @@ function App() {
               </AdminLayout>
             }
           />
-           <Route
+          <Route
             path="/admin/post/:postId"
             element={
               <AdminLayout>
                 <AdminPostDetail />
+              </AdminLayout>
+            }
+          />
+          <Route
+            path="/admin/post/:postId/edit"
+            element={
+              <AdminLayout>
+                <AdminPostEdit />
               </AdminLayout>
             }
           />
