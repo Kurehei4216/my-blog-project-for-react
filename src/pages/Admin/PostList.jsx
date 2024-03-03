@@ -211,7 +211,7 @@ EnhancedTableToolbar.propTypes = {
   numSelected: PropTypes.number.isRequired,
 };
 
-export default function EnhancedTable() {
+export default function EnhancedTable({ handleDisplayDialog }) {
   const [order, setOrder] = useState('asc');
   const [orderBy, setOrderBy] = useState('calories');
   const [selected, setSelected] = useState([]);
@@ -331,7 +331,7 @@ export default function EnhancedTable() {
                     >
                       {row.name}
                     </TableCell>
-                    <TableCell align="right">{row.is_publish ? '公開' : '下書き'}</TableCell>
+                    <TableCell align="right">{row.is_publish ? '公開済み' : '下書き'}</TableCell>
                     <TableCell align="right">{row.updated_at}</TableCell>
                     <TableCell align="right">
                       <IconButton
@@ -342,7 +342,7 @@ export default function EnhancedTable() {
                       </IconButton>
                       <IconButton
                         size="medium"
-                        onClick={() => { }}
+                        onClick={() => { handleDisplayDialog(`http://localhost:3000/api/v1/posts/${row.id}/delete`) }}
                       >
                         <DeleteIcon fontSize="inherit"/>
                       </IconButton>

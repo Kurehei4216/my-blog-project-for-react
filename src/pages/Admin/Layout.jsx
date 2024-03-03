@@ -9,15 +9,14 @@ import List from "@mui/material/List";
 import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
-import Badge from "@mui/material/Badge";
-import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
-import Paper from "@mui/material/Paper";
 import Link from "@mui/material/Link";
 import MenuIcon from "@mui/icons-material/Menu";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
-import NotificationsIcon from "@mui/icons-material/Notifications";
 import { mainListItems, secondaryListItems } from "../../components/ListItem";
+import DeleteDialog from "../../components/DeleteDialog";
+import { useState, cloneElement } from "react";
+import axios from "axios";
 
 function Copyright(props) {
   return (
@@ -88,14 +87,43 @@ const defaultTheme = createTheme();
 
 export default function Layout({ children }) {
   const [open, setOpen] = React.useState(true);
+  const [isDialogOpen, setIsDialogOpen] = useState(false)
+  const [deleteUrl, setDeleteUrl] = useState("")
+
   const toggleDrawer = () => {
     setOpen(!open);
   };
+
+  const handleDelete = (api) => {
+    fetchDelete(api);
+  };
+
+  const handleDisplayDialog = (api) => {
+    setIsDialogOpen(!isDialogOpen)
+    setDeleteUrl(api)
+  }
+
+  const fetchDelete = async (url, data) => {
+      await axios
+        .delete(url)
+        .then((data) => {
+          setIsDialogOpen(!isDialogOpen);
+        })
+        .catch((e) => {
+          console.log(e)
+        })
+      };
 
   return (
     <ThemeProvider theme={defaultTheme}>
       <Box sx={{ display: "flex" }}>
         <CssBaseline />
+        <DeleteDialog
+          isOpen={isDialogOpen}
+          handleDelete={handleDelete}
+          url={deleteUrl}
+          setIsDialogOpen={setIsDialogOpen}
+        />
         <AppBar position="absolute" open={open}>
           <Toolbar
             sx={{
@@ -123,11 +151,6 @@ export default function Layout({ children }) {
             >
               クレヘイブログ(管理画面)
             </Typography>
-            <IconButton color="inherit">
-              <Badge badgeContent={4} color="secondary">
-                <NotificationsIcon />
-              </Badge>
-            </IconButton>
           </Toolbar>
         </AppBar>
         <Drawer variant="permanent" open={open}>
@@ -164,7 +187,9 @@ export default function Layout({ children }) {
         >
           <Toolbar />
           <Grid container sx={{pr: 2, pl:2,  mt: 4, mb: 4 }}>
-            {children}
+            {cloneElement(children, {
+              handleDisplayDialog
+            })}
             <Copyright sx={{ pt: 4 }} />
           </Grid>
         </Box>

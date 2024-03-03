@@ -181,7 +181,7 @@ const PostEdit = () => {
 
             <Grid item xs={12}>
               <Switch
-                checked={post.is_published}
+                checked={post.is_publish}
                 onClick={handleTurnPublish}
               />
               <span>公開する</span>
