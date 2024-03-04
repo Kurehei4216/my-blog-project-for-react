@@ -35,18 +35,15 @@ const PostCreate = () => {
     }
   };
 
-  // タグを追加するハンドラ
   const handleAddTag = (tag) => {
     setTags([...tags, tag]);
   };
 
-  // タグを削除するハンドラ
   const handleDeleteTag = (tagToDelete) => {
     setTags(tags.filter((tag) => tag !== tagToDelete));
   };
 
   const handleCategoryChange = (event) => {
-    console.log(event.target.value);
     setSelectedCategory(event.target.value);
   };
 

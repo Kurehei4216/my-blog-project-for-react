@@ -1,15 +1,11 @@
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
-import Button from "@mui/material/Button";
 import { useState } from "react";
-import { Typography, Tabs, Tab } from "@mui/material";
+import { Typography } from "@mui/material";
 
 const Header = () => {
   const [value, setValue] = useState(0);
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
 
   return (
     <>
