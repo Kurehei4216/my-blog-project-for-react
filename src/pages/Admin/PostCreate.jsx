@@ -1,5 +1,4 @@
 import {
-  Container,
   TextField,
   Chip,
   Button,
@@ -9,8 +8,8 @@ import {
   Select,
   MenuItem,
   FormControl,
+  Switch
 } from "@mui/material";
-import Header from "../Header";
 import { useState, useEffect } from "react";
 import axios from "axios";
 
@@ -20,6 +19,8 @@ const PostCreate = () => {
   const [content, setContent] = useState("");
   const [categories, setCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState('0');
+  const [isPublish, setIsPublish] = useState(false);
+  const [isPreview, setIsPreview] =  useState(false);
 
   const fetchCategories = async () => {
     try {
@@ -48,6 +49,14 @@ const PostCreate = () => {
     console.log(event.target.value);
     setSelectedCategory(event.target.value);
   };
+
+  const handleTurnPublish = () => {
+    setIsPublish(!isPublish)
+  }
+
+  const handleDisplayPreview = () => {
+    setIsPreview(!isPreview)
+  }
 
   // 保存ボタンがクリックされたときの処理
   const handleSave = () => {
@@ -110,25 +119,20 @@ const PostCreate = () => {
       <Grid container direction="column" sx={{ backgroundColor: "#f0f0f0" }}>
         <CssBaseline />
 
-        <div>
+        <div style={{ marginLeft: '80px' }}>
           <Typography variant="h4" component="div" gutterBottom>
             ブログ記事投稿{" "}
             <Button variant="outlined" color="primary" onClick={handleSave} style={{ marginRight: '5px', padding: '7px'}}>
               保存
             </Button>
-            <Button
-              variant="outlined"
-              color="success"
-              onClick={handleDraftSave}
-              style={{ padding: '7px'}}
-            >
-              下書き保存
+            <Button variant="outlined" color="success" onClick={handleDisplayPreview} style={{ marginRight: '5px', padding: '7px'}}>
+              プレビュー
             </Button>
           </Typography>
 
           <Grid container spacing={2}>
             {/* タイトル入力画面 */}
-            <Grid item xs={12}>
+            <Grid item xs={10}>
               <TextField
                 label="タイトル"
                 fullWidth
@@ -137,9 +141,10 @@ const PostCreate = () => {
                 onChange={(e) => setTitle(e.target.value)}
               />
             </Grid>
+            <Grid item xs={2}></Grid>
 
             {/* タグ入力画面 */}
-            <Grid item xs={12}>
+            <Grid item xs={10}>
               <TextField
                 label="タグ"
                 fullWidth
@@ -160,6 +165,7 @@ const PostCreate = () => {
                 />
               ))}
             </Grid>
+            <Grid item xs={2}></Grid>
             <Grid item xs={4}>
               <FormControl
                 style={{
@@ -183,8 +189,16 @@ const PostCreate = () => {
               </FormControl>
             </Grid>
 
-            {/* 本文入力画面 */}
             <Grid item xs={12}>
+              <Switch
+                checked={isPublish}
+                onClick={handleTurnPublish}
+              />
+              <span>公開する</span>
+            </Grid>
+
+            {/* 本文入力画面 */}
+            <Grid item xs={10}>
               <TextField
                 label="本文"
                 multiline
@@ -195,6 +209,7 @@ const PostCreate = () => {
                 onChange={(e) => setContent(e.target.value)}
               />
             </Grid>
+            <Grid item xs={2}></Grid>
           </Grid>
         </div>
       </Grid>
