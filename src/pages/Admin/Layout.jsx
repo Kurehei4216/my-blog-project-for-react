@@ -85,7 +85,7 @@ const Drawer = styled(MuiDrawer, {
 const defaultTheme = createTheme();
 
 export default function Layout({ children }) {
-  const [open, setOpen] = React.useState(true);
+  const [open, setOpen] = useState(true);
   const [isDialogOpen, setIsDialogOpen] = useState(false)
   const [deleteUrl, setDeleteUrl] = useState("")
 
