@@ -7,7 +7,6 @@ import {
 } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import MenuIcon from "@mui/icons-material/Menu";
-import { useEffect, useCallback, useState } from "react";
 import { useNavigate } from 'react-router-dom';
 
 const drawerWidth = 300;

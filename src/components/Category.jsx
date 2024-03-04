@@ -1,6 +1,5 @@
 import {
   Box,
-  CardContent,
   List,
   ListItem,
   ListItemText,
