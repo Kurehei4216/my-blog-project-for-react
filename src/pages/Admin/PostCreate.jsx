@@ -8,10 +8,18 @@ import {
   Select,
   MenuItem,
   FormControl,
-  Switch
+  Switch,
+  Box
 } from "@mui/material";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { EditorState } from 'draft-js';
+import Editor from '@draft-js-plugins/editor';
+import 'draft-js/dist/Draft.css';
+import createEmojiPlugin from '@draft-js-plugins/emoji';
+
+const emojiPlugin = createEmojiPlugin();
+const { EmojiSuggestions, EmojiSelect } = emojiPlugin;
 
 const PostCreate = () => {
   const [tags, setTags] = useState([]);
@@ -21,6 +29,7 @@ const PostCreate = () => {
   const [selectedCategory, setSelectedCategory] = useState('0');
   const [isPublish, setIsPublish] = useState(false);
   const [isPreview, setIsPreview] =  useState(false);
+  const [editorState, setEditorState] = useState(() => EditorState.createEmpty());
 
   const fetchCategories = async () => {
     try {
@@ -196,7 +205,7 @@ const PostCreate = () => {
 
             {/* 本文入力画面 */}
             <Grid item xs={10}>
-              <TextField
+              {/* <TextField
                 label="本文"
                 multiline
                 rows={15}
@@ -204,7 +213,19 @@ const PostCreate = () => {
                 variant="outlined"
                 value={content}
                 onChange={(e) => setContent(e.target.value)}
-              />
+              /> */}
+              <Box border={1} p={2} mt={2}>
+                <div className="text-editor-container">
+                  <EmojiSuggestions />
+                  <EmojiSelect />
+                  <Editor
+                    editorState={editorState}
+                    onChange={setEditorState}
+                    placeholder="ここから入力を行ってください。"
+                    plugins={[emojiPlugin]}
+                  />
+                </div>
+              </Box>
             </Grid>
             <Grid item xs={2}></Grid>
           </Grid>
