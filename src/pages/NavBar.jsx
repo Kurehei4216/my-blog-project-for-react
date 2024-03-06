@@ -1,5 +1,4 @@
-import { Typography, Tabs, Tab, Box } from "@mui/material";
-import Header from "./Header";
+import { Tabs, Tab, Box } from "@mui/material";
 import { useState } from "react";
 
 const NavBar = ({ children }) => {
