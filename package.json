@@ -5,6 +5,7 @@
   "dependencies": {
     "@draft-js-plugins/editor": "^4.1.4",
     "@draft-js-plugins/emoji": "^4.6.7",
+    "@draft-js-plugins/image": "^4.1.4",
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
     "@mui/icons-material": "^5.14.18",
