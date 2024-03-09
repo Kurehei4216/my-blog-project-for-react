@@ -11,15 +11,14 @@ import {
   Switch,
   Box
 } from "@mui/material";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo, useRef } from "react";
 import axios from "axios";
-import { EditorState } from 'draft-js';
-import Editor from '@draft-js-plugins/editor';
-import 'draft-js/dist/Draft.css';
-import createEmojiPlugin from '@draft-js-plugins/emoji';
-
-const emojiPlugin = createEmojiPlugin();
-const { EmojiSuggestions, EmojiSelect } = emojiPlugin;
+import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css"
+import { Editor } from "react-draft-wysiwyg"
+import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css"
+import editorStyle from './editorStyles.module.css'
+import { EditorState, convertToRaw } from "draft-js";
+import draftToHtml from 'draftjs-to-html';
 
 const PostCreate = () => {
   const [tags, setTags] = useState([]);
@@ -29,7 +28,12 @@ const PostCreate = () => {
   const [selectedCategory, setSelectedCategory] = useState('0');
   const [isPublish, setIsPublish] = useState(false);
   const [isPreview, setIsPreview] =  useState(false);
-  const [editorState, setEditorState] = useState(() => EditorState.createEmpty());
+  const [editorState, setEditorState] = useState(() =>
+    EditorState.createEmpty()
+  );
+
+  const text =
+  'In this editor a toolbar shows up once you select part of the text …';
 
   const fetchCategories = async () => {
     try {
@@ -66,34 +70,13 @@ const PostCreate = () => {
 
   // 保存ボタンがクリックされたときの処理
   const handleSave = () => {
+    const text = JSON.stringify(convertToRaw(editorState.getCurrentContent()))
     // ここに投稿を保存する処理を追加
     const params = {
       post: {
         title: title,
-        content: content,
+        content: text,
         is_published: true,
-      },
-      tags: tags,
-      category: selectedCategory,
-    };
-    axios
-      .post(`http://localhost:3000/api/v1/posts`, params)
-      .then((response) => {
-        if (response.status == 200) {
-          console.log("Title:", title);
-
-          console.log("記事の投稿成功");
-        }
-      });
-  };
-
-  const handleDraftSave = () => {
-    // ここに投稿を保存する処理を追加
-    const params = {
-      post: {
-        title: title,
-        content: content,
-        is_published: false,
       },
       tags: tags,
       category: selectedCategory,
@@ -205,27 +188,31 @@ const PostCreate = () => {
 
             {/* 本文入力画面 */}
             <Grid item xs={10}>
-              {/* <TextField
-                label="本文"
-                multiline
-                rows={15}
-                fullWidth
-                variant="outlined"
-                value={content}
-                onChange={(e) => setContent(e.target.value)}
-              /> */}
-              <Box border={1} p={2} mt={2}>
-                <div className="text-editor-container">
-                  <EmojiSuggestions />
-                  <EmojiSelect />
-                  <Editor
-                    editorState={editorState}
-                    onChange={setEditorState}
-                    placeholder="ここから入力を行ってください。"
-                    plugins={[emojiPlugin]}
-                  />
-                </div>
-              </Box>
+              <div className={editorStyle.editor}>
+                <Editor
+                  onEditorStateChange={setEditorState}
+                  editorState={editorState}
+                  toolbar={{
+                    options: ["inline", "blockType", "list", "textAlign", "link"],
+                    inline: {
+                      options: ["bold", "strikethrough"],
+                    },
+                    blockType: {
+                      inDropdown: false,
+                      options: ["H2"],
+                    },
+                    list: {
+                      options: ["unordered"],
+                    },
+                    textAlign: {
+                      options: ["center"],
+                    },
+                    link: {
+                      options: ["link"],
+                    },
+                  }}
+                />
+              </div>
             </Grid>
             <Grid item xs={2}></Grid>
           </Grid>
