@@ -13,12 +13,9 @@ import {
 } from "@mui/material";
 import { useState, useEffect, useMemo, useRef } from "react";
 import axios from "axios";
-import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css"
-import { Editor } from "react-draft-wysiwyg"
-import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css"
-import editorStyle from './editorStyles.module.css'
 import { EditorState, convertToRaw } from "draft-js";
 import draftToHtml from 'draftjs-to-html';
+import RichEditor from '../../components/RichEditor'
 
 const PostCreate = () => {
   const [tags, setTags] = useState([]);
@@ -186,33 +183,11 @@ const PostCreate = () => {
               <span>公開する</span>
             </Grid>
 
-            {/* 本文入力画面 */}
             <Grid item xs={10}>
-              <div className={editorStyle.editor}>
-                <Editor
-                  onEditorStateChange={setEditorState}
-                  editorState={editorState}
-                  toolbar={{
-                    options: ["inline", "blockType", "list", "textAlign", "link"],
-                    inline: {
-                      options: ["bold", "strikethrough"],
-                    },
-                    blockType: {
-                      inDropdown: false,
-                      options: ["H2"],
-                    },
-                    list: {
-                      options: ["unordered"],
-                    },
-                    textAlign: {
-                      options: ["center"],
-                    },
-                    link: {
-                      options: ["link"],
-                    },
-                  }}
-                />
-              </div>
+              <RichEditor
+                editorState={editorState}
+                setEditorState={setEditorState}
+              />
             </Grid>
             <Grid item xs={2}></Grid>
           </Grid>
