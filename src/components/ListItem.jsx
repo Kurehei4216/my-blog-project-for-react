@@ -9,13 +9,14 @@ import PeopleIcon from "@mui/icons-material/People";
 import BarChartIcon from "@mui/icons-material/BarChart";
 import LayersIcon from "@mui/icons-material/Layers";
 import AssignmentIcon from "@mui/icons-material/Assignment";
+import ArticleIcon from "@mui/icons-material/Article";
 import { Link } from 'react-router-dom';
 
 export const mainListItems = (
   <React.Fragment>
     <ListItemButton component={Link} to="/admin/posts">
       <ListItemIcon>
-        <DashboardIcon />
+        <ArticleIcon />
       </ListItemIcon>
       <ListItemText primary="記事" />
     </ListItemButton>
@@ -48,12 +49,10 @@ export const mainListItems = (
 
 export const secondaryListItems = (
   <React.Fragment>
-    <ListSubheader component="div" inset>
-      Saved reports
-    </ListSubheader>
+
     <ListItemButton>
       <ListItemIcon>
-        <AssignmentIcon />
+        <ArticleIcon />
       </ListItemIcon>
       <ListItemText primary="Current month" />
     </ListItemButton>
