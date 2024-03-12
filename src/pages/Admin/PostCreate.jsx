@@ -11,7 +11,7 @@ import {
   Switch,
   Box
 } from "@mui/material";
-import { useState, useEffect, useMemo, useRef } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import { EditorState, convertToRaw } from "draft-js";
 import draftToHtml from 'draftjs-to-html';
@@ -20,7 +20,6 @@ import RichEditor from '../../components/RichEditor'
 const PostCreate = () => {
   const [tags, setTags] = useState([]);
   const [title, setTitle] = useState("");
-  const [content, setContent] = useState("");
   const [categories, setCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState('0');
   const [isPublish, setIsPublish] = useState(false);
@@ -28,9 +27,6 @@ const PostCreate = () => {
   const [editorState, setEditorState] = useState(() =>
     EditorState.createEmpty()
   );
-
-  const text =
-  'In this editor a toolbar shows up once you select part of the text …';
 
   const fetchCategories = async () => {
     try {
@@ -68,7 +64,6 @@ const PostCreate = () => {
   // 保存ボタンがクリックされたときの処理
   const handleSave = () => {
     const text = JSON.stringify(convertToRaw(editorState.getCurrentContent()))
-    // ここに投稿を保存する処理を追加
     const params = {
       post: {
         title: title,
