@@ -63,7 +63,7 @@ const PostCreate = () => {
 
   // 保存ボタンがクリックされたときの処理
   const handleSave = () => {
-    const text = JSON.stringify(convertToRaw(editorState.getCurrentContent()))
+    const text = JSON.stringify(draftToHtml(convertToRaw(editorState.getCurrentContent())))
     const params = {
       post: {
         title: title,

@@ -10,19 +10,22 @@ import {
   CardContent
 } from "@mui/material";
 import { useNavigate } from 'react-router-dom';
+import parse from 'html-react-parser';
 
 
 const PostDetail = () => {
   const { postId } = useParams()
   const [post, setPost] = useState({})
   const [tags, setTags] = useState([])
-  const history = useNavigate();
 
   const fetchPost = async () => {
     try {
       await axios
         .get(`http://localhost:3000/api/v1/posts/${postId}`)
         .then((data) => {
+          const post = data.data.post
+          const content = parse(post.content)
+          post.content = content
           setPost(data.data.post);
           setTags(data.data.tags);
         });
