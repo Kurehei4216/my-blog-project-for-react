@@ -9,9 +9,7 @@ import {
   Card,
   CardContent
 } from "@mui/material";
-import { useNavigate } from 'react-router-dom';
 import parse from 'html-react-parser';
-
 
 const PostDetail = () => {
   const { postId } = useParams()
