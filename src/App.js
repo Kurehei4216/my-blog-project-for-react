@@ -1,13 +1,13 @@
-import './App.css';
-import Layout from './pages/Layout';
-import Home from './pages/Home';
-import PostCreate from './pages/Admin/PostCreate';
-import AdminPostDetail from './pages/Admin/PostDetail';
-import AdminLayout from './pages/Admin/Layout';
-import AdminPostList from './pages/Admin/PostList';
-import AdminPostEdit from './pages/Admin/PostEdit';
+import "./App.css";
+import Layout from "./pages/Layout";
+import Home from "./pages/Home";
+import PostCreate from "./pages/Admin/PostCreate";
+import AdminPostDetail from "./pages/Admin/PostDetail";
+import AdminLayout from "./pages/Admin/Layout";
+import AdminPostList from "./pages/Admin/PostList";
+import AdminPostEdit from "./pages/Admin/PostEdit";
 
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 function App() {
   return (

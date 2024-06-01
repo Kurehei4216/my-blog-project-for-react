@@ -9,19 +9,19 @@ import {
   MenuItem,
   FormControl,
   Switch,
-} from '@mui/material';
-import { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-import axios from 'axios';
-import htmlToDraft from 'html-to-draftjs';
-import { EditorState, ContentState } from 'draft-js';
-import RichEditor from '../../components/RichEditor';
+} from "@mui/material";
+import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
+import axios from "axios";
+import htmlToDraft from "html-to-draftjs";
+import { EditorState, ContentState } from "draft-js";
+import RichEditor from "../../components/RichEditor";
 
 const PostEdit = () => {
   const { postId } = useParams();
   const [tags, setTags] = useState([]);
   const [categories, setCategories] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState('0');
+  const [selectedCategory, setSelectedCategory] = useState("0");
   const [post, setPost] = useState({});
   const [editorState, setEditorState] = useState(() =>
     EditorState.createEmpty(),
@@ -32,7 +32,7 @@ const PostEdit = () => {
       await axios
         .get(`http://localhost:3000/api/v1/categories`)
         .then((data) => {
-          const array = [{ id: '0', name: 'カテゴリーを選んでね' }];
+          const array = [{ id: "0", name: "カテゴリーを選んでね" }];
           setCategories(data.data.concat(array));
         });
     } catch (e) {
@@ -44,8 +44,8 @@ const PostEdit = () => {
     const tag = {
       id: 1,
       name: tagName,
-      created_at: '2023-12-08T18:34:57.643Z',
-      updated_at: '2023-12-08T18:34:57.643Z',
+      created_at: "2023-12-08T18:34:57.643Z",
+      updated_at: "2023-12-08T18:34:57.643Z",
       is_deleted: false,
     };
     setTags([...tags, tag]);
@@ -79,7 +79,7 @@ const PostEdit = () => {
       .put(`http://localhost:3000/api/v1/posts/${postId}`, params)
       .then((response) => {
         if (response.status == 200) {
-          console.log('記事の投稿成功');
+          console.log("記事の投稿成功");
         }
       })
       .catch((e) => {
@@ -126,14 +126,14 @@ const PostEdit = () => {
     <>
       <Grid container direction="column">
         <CssBaseline />
-        <div style={{ marginLeft: '80px' }}>
+        <div style={{ marginLeft: "80px" }}>
           <Typography variant="h5" component="div" gutterBottom>
-            ブログ記事編集{' '}
+            ブログ記事編集{" "}
             <Button
               variant="outlined"
               color="primary"
               onClick={handleSave}
-              style={{ marginLeft: '20px', padding: '7px' }}
+              style={{ marginLeft: "20px", padding: "7px" }}
             >
               保存
             </Button>
@@ -159,9 +159,9 @@ const PostEdit = () => {
                 fullWidth
                 variant="outlined"
                 onKeyDown={(e) => {
-                  if (e.key === 'Enter' && e.target.value.trim() !== '') {
+                  if (e.key === "Enter" && e.target.value.trim() !== "") {
                     handleAddTag(e.target.value.trim());
-                    e.target.value = '';
+                    e.target.value = "";
                   }
                 }}
               />
@@ -172,7 +172,7 @@ const PostEdit = () => {
                     key={index}
                     label={tag}
                     onDelete={() => handleDeleteTag(tag)}
-                    style={{ margin: '4px' }}
+                    style={{ margin: "4px" }}
                   />
                 ))}
             </Grid>
@@ -180,9 +180,9 @@ const PostEdit = () => {
             <Grid item xs={4}>
               <FormControl
                 style={{
-                  minWidth: '100%',
-                  backgroundColor: 'white',
-                  color: 'black',
+                  minWidth: "100%",
+                  backgroundColor: "white",
+                  color: "black",
                 }}
               >
                 <Select

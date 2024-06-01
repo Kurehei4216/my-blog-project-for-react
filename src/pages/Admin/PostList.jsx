@@ -1,5 +1,5 @@
-import * as React from 'react';
-import PropTypes from 'prop-types';
+import * as React from "react";
+import PropTypes from "prop-types";
 import {
   Box,
   Table,
@@ -16,17 +16,17 @@ import {
   Checkbox,
   IconButton,
   Tooltip,
-} from '@mui/material';
-import { alpha } from '@mui/material/styles';
-import DeleteIcon from '@mui/icons-material/Delete';
-import FilterListIcon from '@mui/icons-material/FilterList';
-import { visuallyHidden } from '@mui/utils';
-import { useState, useEffect, useContext } from 'react';
-import axios from 'axios';
-import { getDateFormatByFormat } from '../../util/Date';
-import { useNavigate } from 'react-router-dom';
-import EditIcon from '@mui/icons-material/Edit';
-import { LayoutContext } from './Layout';
+} from "@mui/material";
+import { alpha } from "@mui/material/styles";
+import DeleteIcon from "@mui/icons-material/Delete";
+import FilterListIcon from "@mui/icons-material/FilterList";
+import { visuallyHidden } from "@mui/utils";
+import { useState, useEffect, useContext } from "react";
+import axios from "axios";
+import { getDateFormatByFormat } from "../../util/Date";
+import { useNavigate } from "react-router-dom";
+import EditIcon from "@mui/icons-material/Edit";
+import { LayoutContext } from "./Layout";
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -39,7 +39,7 @@ function descendingComparator(a, b, orderBy) {
 }
 
 function getComparator(order, orderBy) {
-  return order === 'desc'
+  return order === "desc"
     ? (a, b) => descendingComparator(a, b, orderBy)
     : (a, b) => -descendingComparator(a, b, orderBy);
 }
@@ -58,28 +58,28 @@ function stableSort(array, comparator) {
 
 const headCells = [
   {
-    id: 'name',
+    id: "name",
     numeric: false,
     disablePadding: true,
-    label: 'タイトル',
+    label: "タイトル",
   },
   {
-    id: 'is_publish',
+    id: "is_publish",
     numeric: true,
     disablePadding: false,
-    label: '状態',
+    label: "状態",
   },
   {
-    id: 'updated_at',
+    id: "updated_at",
     numeric: true,
     disablePadding: false,
-    label: '最終更新日',
+    label: "最終更新日",
   },
   {
-    id: 'button',
+    id: "button",
     numeric: true,
     disablePadding: false,
-    label: '',
+    label: "",
   },
 ];
 
@@ -106,26 +106,26 @@ function EnhancedTableHead(props) {
             checked={rowCount > 0 && numSelected === rowCount}
             onChange={onSelectAllClick}
             inputProps={{
-              'aria-label': 'select all desserts',
+              "aria-label": "select all desserts",
             }}
           />
         </TableCell>
         {headCells.map((headCell) => (
           <TableCell
             key={headCell.id}
-            align={headCell.numeric ? 'right' : 'left'}
-            padding={headCell.disablePadding ? 'none' : 'normal'}
+            align={headCell.numeric ? "right" : "left"}
+            padding={headCell.disablePadding ? "none" : "normal"}
             sortDirection={orderBy === headCell.id ? order : false}
           >
             <TableSortLabel
               active={orderBy === headCell.id}
-              direction={orderBy === headCell.id ? order : 'asc'}
+              direction={orderBy === headCell.id ? order : "asc"}
               onClick={createSortHandler(headCell.id)}
             >
               {headCell.label}
               {orderBy === headCell.id ? (
                 <Box component="span" sx={visuallyHidden}>
-                  {order === 'desc' ? 'sorted descending' : 'sorted ascending'}
+                  {order === "desc" ? "sorted descending" : "sorted ascending"}
                 </Box>
               ) : null}
             </TableSortLabel>
@@ -140,7 +140,7 @@ EnhancedTableHead.propTypes = {
   numSelected: PropTypes.number.isRequired,
   onRequestSort: PropTypes.func.isRequired,
   onSelectAllClick: PropTypes.func.isRequired,
-  order: PropTypes.oneOf(['asc', 'desc']).isRequired,
+  order: PropTypes.oneOf(["asc", "desc"]).isRequired,
   orderBy: PropTypes.string.isRequired,
   rowCount: PropTypes.number.isRequired,
 };
@@ -164,7 +164,7 @@ function EnhancedTableToolbar(props) {
     >
       {numSelected > 0 ? (
         <Typography
-          sx={{ flex: '1 1 100%' }}
+          sx={{ flex: "1 1 100%" }}
           color="inherit"
           variant="subtitle1"
           component="div"
@@ -173,7 +173,7 @@ function EnhancedTableToolbar(props) {
         </Typography>
       ) : (
         <Typography
-          sx={{ flex: '1 1 100%' }}
+          sx={{ flex: "1 1 100%" }}
           variant="h6"
           id="tableTitle"
           component="div"
@@ -204,8 +204,8 @@ EnhancedTableToolbar.propTypes = {
 };
 
 export default function EnhancedTable({ handleDisplayDialog }) {
-  const [order, setOrder] = useState('asc');
-  const [orderBy, setOrderBy] = useState('calories');
+  const [order, setOrder] = useState("asc");
+  const [orderBy, setOrderBy] = useState("calories");
   const [selected, setSelected] = useState([]);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
@@ -239,7 +239,7 @@ export default function EnhancedTable({ handleDisplayDialog }) {
               id: value.id,
               name: value.title,
               is_publish: value.is_publish,
-              updated_at: getDateFormatByFormat(value.updated_at, 'YYYY-MM-DD'),
+              updated_at: getDateFormatByFormat(value.updated_at, "YYYY-MM-DD"),
               carbs: 67,
               protein: 4.3,
             };
@@ -256,8 +256,8 @@ export default function EnhancedTable({ handleDisplayDialog }) {
     history(`/admin/post/${postId}/edit`);
 
   const handleRequestSort = (event, property) => {
-    const isAsc = orderBy === property && order === 'asc';
-    setOrder(isAsc ? 'desc' : 'asc');
+    const isAsc = orderBy === property && order === "asc";
+    setOrder(isAsc ? "desc" : "asc");
     setOrderBy(property);
   };
 
@@ -309,8 +309,8 @@ export default function EnhancedTable({ handleDisplayDialog }) {
   );
 
   return (
-    <Box sx={{ width: '100%' }}>
-      <Paper sx={{ width: '100%', mb: 2 }}>
+    <Box sx={{ width: "100%" }}>
+      <Paper sx={{ width: "100%", mb: 2 }}>
         <EnhancedTableToolbar numSelected={selected.length} />
         <TableContainer>
           <Table sx={{ minWidth: 750 }} aria-labelledby="tableTitle">
@@ -336,14 +336,14 @@ export default function EnhancedTable({ handleDisplayDialog }) {
                     tabIndex={-1}
                     key={row.id}
                     selected={isItemSelected}
-                    sx={{ cursor: 'pointer' }}
+                    sx={{ cursor: "pointer" }}
                   >
                     <TableCell padding="checkbox">
                       <Checkbox
                         color="primary"
                         checked={isItemSelected}
                         inputProps={{
-                          'aria-labelledby': labelId,
+                          "aria-labelledby": labelId,
                         }}
                       />
                     </TableCell>
@@ -359,7 +359,7 @@ export default function EnhancedTable({ handleDisplayDialog }) {
                       {row.name}
                     </TableCell>
                     <TableCell align="right">
-                      {row.is_publish ? '公開済み' : '下書き'}
+                      {row.is_publish ? "公開済み" : "下書き"}
                     </TableCell>
                     <TableCell align="right">{row.updated_at}</TableCell>
                     <TableCell align="right">

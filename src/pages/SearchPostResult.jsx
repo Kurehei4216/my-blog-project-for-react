@@ -1,14 +1,5 @@
-import {
-  Grid,
-  Link,
-  CardContent,
-  Button,
-  Box,
-  Typography,
-  Card,
-  Pagination,
-} from '@mui/material';
-import { useState } from 'react';
+import { Grid, CardContent, Typography, Card, Pagination } from "@mui/material";
+import { useState } from "react";
 
 const SearchPostResult = (props) => {
   const [searchedPosts, setSearchedPosts] = useState([]);
@@ -37,9 +28,9 @@ const SearchPostResult = (props) => {
       <Grid
         container
         style={{
-          marginTop: '32px',
-          alignContent: 'center',
-          textAlign: 'center',
+          marginTop: "32px",
+          alignContent: "center",
+          textAlign: "center",
         }}
       >
         <Pagination count={10} variant="outlined" color="primary" />

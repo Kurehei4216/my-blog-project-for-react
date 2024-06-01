@@ -10,19 +10,19 @@ import {
   FormControl,
   Switch,
   Box,
-} from '@mui/material';
-import { useState, useEffect } from 'react';
-import axios from 'axios';
-import { EditorState, convertToRaw } from 'draft-js';
-import draftToHtml from 'draftjs-to-html';
-import RichEditor from '../../components/RichEditor';
-import { useNavigate } from 'react-router-dom';
+} from "@mui/material";
+import { useState, useEffect } from "react";
+import axios from "axios";
+import { EditorState, convertToRaw } from "draft-js";
+import draftToHtml from "draftjs-to-html";
+import RichEditor from "../../components/RichEditor";
+import { useNavigate } from "react-router-dom";
 
 const PostCreate = () => {
   const [tags, setTags] = useState([]);
-  const [title, setTitle] = useState('');
+  const [title, setTitle] = useState("");
   const [categories, setCategories] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState('0');
+  const [selectedCategory, setSelectedCategory] = useState("0");
   const [isPublish, setIsPublish] = useState(false);
   const [isPreview, setIsPreview] = useState(false);
   const [editorState, setEditorState] = useState(() =>
@@ -35,7 +35,7 @@ const PostCreate = () => {
       await axios
         .get(`http://localhost:3000/api/v1/categories`)
         .then((data) => {
-          const array = [{ id: '0', name: 'カテゴリーを選んでね' }];
+          const array = [{ id: "0", name: "カテゴリーを選んでね" }];
           setCategories(data.data.concat(array));
         });
     } catch (e) {
@@ -81,10 +81,10 @@ const PostCreate = () => {
       .post(`http://localhost:3000/api/v1/posts`, params)
       .then((response) => {
         if (response.status == 200) {
-          console.log('Title:', title);
+          console.log("Title:", title);
 
-          console.log('記事の投稿成功');
-          history('/admin/posts');
+          console.log("記事の投稿成功");
+          history("/admin/posts");
         }
       });
   };
@@ -102,17 +102,17 @@ const PostCreate = () => {
 
   return (
     <>
-      <Grid container direction="column" sx={{ backgroundColor: '#f0f0f0' }}>
+      <Grid container direction="column" sx={{ backgroundColor: "#f0f0f0" }}>
         <CssBaseline />
 
-        <div style={{ marginLeft: '80px' }}>
+        <div style={{ marginLeft: "80px" }}>
           <Typography variant="h4" component="div" gutterBottom>
-            ブログ記事投稿{' '}
+            ブログ記事投稿{" "}
             <Button
               variant="outlined"
               color="primary"
               onClick={handleSave}
-              style={{ marginRight: '5px', padding: '7px' }}
+              style={{ marginRight: "5px", padding: "7px" }}
             >
               保存
             </Button>
@@ -120,7 +120,7 @@ const PostCreate = () => {
               variant="outlined"
               color="success"
               onClick={handleDisplayPreview}
-              style={{ marginRight: '5px', padding: '7px' }}
+              style={{ marginRight: "5px", padding: "7px" }}
             >
               プレビュー
             </Button>
@@ -146,9 +146,9 @@ const PostCreate = () => {
                 fullWidth
                 variant="outlined"
                 onKeyDown={(e) => {
-                  if (e.key === 'Enter' && e.target.value.trim() !== '') {
+                  if (e.key === "Enter" && e.target.value.trim() !== "") {
                     handleAddTag(e.target.value.trim());
-                    e.target.value = '';
+                    e.target.value = "";
                   }
                 }}
               />
@@ -157,7 +157,7 @@ const PostCreate = () => {
                   key={index}
                   label={tag}
                   onDelete={() => handleDeleteTag(tag)}
-                  style={{ margin: '4px' }}
+                  style={{ margin: "4px" }}
                 />
               ))}
             </Grid>
@@ -165,9 +165,9 @@ const PostCreate = () => {
             <Grid item xs={4}>
               <FormControl
                 style={{
-                  minWidth: '100%',
-                  backgroundColor: 'white',
-                  color: 'black',
+                  minWidth: "100%",
+                  backgroundColor: "white",
+                  color: "black",
                 }}
               >
                 <Select
