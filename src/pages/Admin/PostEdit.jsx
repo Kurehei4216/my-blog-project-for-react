@@ -13,6 +13,10 @@ import {
 import { useState, useEffect } from "react";
 import { useParams } from 'react-router-dom';
 import axios from "axios";
+import htmlToDraft from 'draftjs-to-html';
+import { EditorState, ContentState } from "draft-js";
+import draftToHtml from 'draftjs-to-html';
+import RichEditor from '../../components/RichEditor'
 
 const PostEdit = () => {
   const { postId } = useParams()
@@ -20,6 +24,9 @@ const PostEdit = () => {
   const [categories, setCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState('0');
   const [post, setPost] = useState({})
+  const [editorState, setEditorState] = useState(() =>
+    EditorState.createEmpty()
+  );
 
   const fetchCategories = async () => {
     try {
@@ -87,6 +94,12 @@ const PostEdit = () => {
       await axios
         .get(`http://localhost:3000/api/v1/posts/${postId}`)
         .then((data) => {
+          const content = data.data.post.content;
+          const blockArray = htmlToDraft(content);
+          const contentState = ContentState.createFromBlockArray(blockArray.contentBlocks, blockArray.entityMap);
+          const editor = EditorState.createWithContent(contentState);
+          setEditorState(editor);
+
           Promise.all([setPost(data.data.post), setTags(data.data.tags)]);
         });
     } catch (e) {
@@ -189,14 +202,9 @@ const PostEdit = () => {
 
             <Grid item xs={10}>
               <label>本文</label>
-              <TextField
-                label=""
-                multiline
-                rows={15}
-                fullWidth
-                variant="outlined"
-                value={post.content}
-                onChange={(e) => setPost({...post, content: e.target.value })}
+              <RichEditor
+                editorState={editorState}
+                setEditorState={setEditorState}
               />
             </Grid>
             <Grid item xs={2}></Grid>

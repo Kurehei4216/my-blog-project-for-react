@@ -10,6 +10,7 @@ import {
   FormControl,
   Select,
   MenuItem,
+  Pagination
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import axios from "axios";
@@ -25,15 +26,6 @@ const Home = () => {
   const [categories, setCategories] = useState([]);
   const [searchKeyWord, setSearchKeyWord] = useState("");
   const [searchedPosts, setSearchedPosts] = useState([]);
-
-
-  const cardStyle = {
-    height: "2000px",
-  };
-
-  const searchStyle = {
-    height: "200px",
-  };
 
   const tagStyle = {
     marginTop: "30px",
@@ -136,7 +128,7 @@ const Home = () => {
           </Breadcrumbs>
         </Grid>
 
-        {/* <Grid item xs={12}>
+        {/* <Grid item xs={8}>
           <Typography variant="h5" gutterBottom>
             おすすめ記事
           </Typography>

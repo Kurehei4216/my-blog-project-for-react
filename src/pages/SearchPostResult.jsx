@@ -6,6 +6,7 @@ import {
   Box,
   Typography,
   Card,
+  Pagination
 } from "@mui/material";
 import { useState } from "react";
 
@@ -32,6 +33,14 @@ const SearchPostResult = (props) => {
             ))}
           </>
         ))}
+      </Grid>
+      <Grid container
+          style={{
+            marginTop: "32px",
+            alignContent: "center",
+            textAlign: "center",
+          }}>
+        <Pagination count={10} variant="outlined" color="primary" />
       </Grid>
     </Grid>
   );
