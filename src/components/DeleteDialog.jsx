@@ -5,7 +5,6 @@ import {
   DialogActions,
   Button
 } from "@mui/material";
-
 const DeleteDialog = ({isOpen, handleDelete, url, setIsDialogOpen}) => {
 
   return (

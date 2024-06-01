@@ -21,31 +21,13 @@ import { alpha } from '@mui/material/styles';
 import DeleteIcon from '@mui/icons-material/Delete';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import { visuallyHidden } from '@mui/utils';
-import { useState } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import axios from "axios";
 import { getDateFormatByFormat } from '../../util/Date'
 import { useNavigate } from 'react-router-dom';
 import EditIcon from '@mui/icons-material/Edit';
+import { LayoutContext } from './Layout';
 
-const fetchPosts = async () => {
-    try {
-      return await axios.get(`http://localhost:3000/api/v1/posts`).then((data) => {
-        return data.data.map(value => {
-          return {
-            id: value.id,
-            name: value.title,
-            is_publish: value.is_publish,
-            updated_at: getDateFormatByFormat(value.updated_at, 'YYYY-MM-DD'),
-            carbs: 67,
-            protein: 4.3,
-          }
-        })
-      });
-    } catch (e) {
-      console.log(e);
-    }
-};
-const rows = await fetchPosts()
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -220,6 +202,45 @@ export default function EnhancedTable({ handleDisplayDialog }) {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const history = useNavigate();
+  const [rows, setRows] = useState([]);
+
+  const {isDelete} = useContext(LayoutContext);
+  // eslint-disable-next-line no-undef
+  useEffect(() => {
+    fetchPosts().then((data) => setRows(data));
+  }, [isDelete])
+
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        await fetchPosts().then((data) => setRows(data));
+      } catch (e) {
+        console.log(e);
+      }
+    };
+    fetchData();
+  }, [])
+
+
+  const fetchPosts = async () => {
+    try {
+      return await axios.get(`http://localhost:3000/api/v1/posts`).then((data) => {
+        return data.data.map(value => {
+          return {
+            id: value.id,
+            name: value.title,
+            is_publish: value.is_publish,
+            updated_at: getDateFormatByFormat(value.updated_at, 'YYYY-MM-DD'),
+            carbs: 67,
+            protein: 4.3,
+          }
+        })
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
 
   const handleRedirectWithParameter = (postId) => history(`/admin/post/${postId}`);
@@ -273,14 +294,11 @@ export default function EnhancedTable({ handleDisplayDialog }) {
   const emptyRows =
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
 
-  const visibleRows = React.useMemo(
-    () =>
+  const visibleRows = 
       stableSort(rows, getComparator(order, orderBy)).slice(
         page * rowsPerPage,
         page * rowsPerPage + rowsPerPage,
-      ),
-    [order, orderBy, page, rowsPerPage],
-  );
+    );
 
   return (
     <Box sx={{ width: '100%' }}>
@@ -344,7 +362,7 @@ export default function EnhancedTable({ handleDisplayDialog }) {
                       </IconButton>
                       <IconButton
                         size="medium"
-                        onClick={() => { handleDisplayDialog(`http://localhost:3000/api/v1/posts/${row.id}/delete`) }}
+                        onClick={() => { handleDisplayDialog(`http://localhost:3000/api/v1/posts/${row.id}/delete`)}}
                       >
                         <DeleteIcon fontSize="inherit"/>
                       </IconButton>

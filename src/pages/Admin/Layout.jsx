@@ -14,7 +14,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import { mainListItems, secondaryListItems } from "../../components/ListItem";
 import DeleteDialog from "../../components/DeleteDialog";
-import { useState, cloneElement } from "react";
+import { useState, cloneElement, createContext } from "react";
 import axios from "axios";
 
 function Copyright(props) {
@@ -84,10 +84,13 @@ const Drawer = styled(MuiDrawer, {
 // TODO remove, this demo shouldn't need to reset the theme.
 const defaultTheme = createTheme();
 
+export const LayoutContext = createContext();
+
 export default function Layout({ children }) {
   const [open, setOpen] = useState(true);
   const [isDialogOpen, setIsDialogOpen] = useState(false)
   const [deleteUrl, setDeleteUrl] = useState("")
+  const [isDelete, setIsDelete] = useState(false);
 
   const toggleDrawer = () => {
     setOpen(!open);
@@ -97,16 +100,20 @@ export default function Layout({ children }) {
     fetchDelete(api);
   };
 
-  const handleDisplayDialog = (api) => {
+  const handleDisplayDialog = async (api) => {
     setIsDialogOpen(!isDialogOpen)
     setDeleteUrl(api)
   }
+
+  const contextParams = { isDelete }
 
   const fetchDelete = async (url, data) => {
       await axios
         .delete(url)
         .then((data) => {
           setIsDialogOpen(!isDialogOpen);
+          setIsDelete(true);
+          console.log('削除されました')
         })
         .catch((e) => {
           console.log(e)
@@ -114,85 +121,88 @@ export default function Layout({ children }) {
       };
 
   return (
-    <ThemeProvider theme={defaultTheme}>
-      <Box sx={{ display: "flex" }}>
-        <CssBaseline />
-        <DeleteDialog
-          isOpen={isDialogOpen}
-          handleDelete={handleDelete}
-          url={deleteUrl}
-          setIsDialogOpen={setIsDialogOpen}
-        />
-        <AppBar position="absolute" open={open}>
-          <Toolbar
-            sx={{
-              pr: "24px", // keep right padding when drawer closed
-            }}
-          >
-            <IconButton
-              edge="start"
-              color="inherit"
-              aria-label="open drawer"
-              onClick={toggleDrawer}
+    <LayoutContext.Provider value={contextParams}>
+      <ThemeProvider theme={defaultTheme}>
+        <Box sx={{ display: "flex" }}>
+          <CssBaseline />
+          <DeleteDialog
+            isOpen={isDialogOpen}
+            handleDelete={handleDelete}
+            url={deleteUrl}
+            setIsDialogOpen={setIsDialogOpen}
+          />
+          <AppBar position="absolute" open={open}>
+            <Toolbar
               sx={{
-                marginRight: "36px",
-                ...(open && { display: "none" }),
+                pr: "24px", // keep right padding when drawer closed
               }}
             >
-              <MenuIcon />
-            </IconButton>
-            <Typography
-              component="h1"
-              variant="h6"
-              color="inherit"
-              noWrap
-              sx={{ flexGrow: 1 }}
+              <IconButton
+                edge="start"
+                color="inherit"
+                aria-label="open drawer"
+                onClick={toggleDrawer}
+                sx={{
+                  marginRight: "36px",
+                  ...(open && { display: "none" }),
+                }}
+              >
+                <MenuIcon />
+              </IconButton>
+              <Typography
+                component="h1"
+                variant="h6"
+                color="inherit"
+                noWrap
+                sx={{ flexGrow: 1 }}
+              >
+                クレヘイブログ(管理画面)
+              </Typography>
+            </Toolbar>
+          </AppBar>
+          <Drawer variant="permanent" open={open}>
+            <Toolbar
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "flex-end",
+                px: [1],
+              }}
             >
-              クレヘイブログ(管理画面)
-            </Typography>
-          </Toolbar>
-        </AppBar>
-        <Drawer variant="permanent" open={open}>
-          <Toolbar
+              <IconButton onClick={toggleDrawer}>
+                <ChevronLeftIcon />
+              </IconButton>
+            </Toolbar>
+            <Divider />
+            <List component="nav">
+              {mainListItems}
+              <Divider sx={{ my: 1 }} />
+              {secondaryListItems}
+            </List>
+          </Drawer>
+          <Box
+            component="main"
             sx={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "flex-end",
-              px: [1],
+              backgroundColor: (theme) =>
+                theme.palette.mode === "light"
+                  ? theme.palette.grey[100]
+                  : theme.palette.grey[900],
+              flexGrow: 1,
+              height: "100vh",
+              overflow: "auto",
             }}
           >
-            <IconButton onClick={toggleDrawer}>
-              <ChevronLeftIcon />
-            </IconButton>
-          </Toolbar>
-          <Divider />
-          <List component="nav">
-            {mainListItems}
-            <Divider sx={{ my: 1 }} />
-            {secondaryListItems}
-          </List>
-        </Drawer>
-        <Box
-          component="main"
-          sx={{
-            backgroundColor: (theme) =>
-              theme.palette.mode === "light"
-                ? theme.palette.grey[100]
-                : theme.palette.grey[900],
-            flexGrow: 1,
-            height: "100vh",
-            overflow: "auto",
-          }}
-        >
-          <Toolbar />
-          <Grid container sx={{pr: 2, pl:2,  mt: 4, mb: 4 }}>
-            {cloneElement(children, {
-              handleDisplayDialog
-            })}
-            <Copyright sx={{ pt: 4 }} />
-          </Grid>
+            <Toolbar />
+            <Grid container sx={{pr: 2, pl:2,  mt: 4, mb: 4 }}>
+              {cloneElement(children, {
+                handleDisplayDialog
+              })}
+              <Copyright sx={{ pt: 4 }} />
+            </Grid>
+          </Box>
         </Box>
-      </Box>
-    </ThemeProvider>
+      </ThemeProvider>
+    </LayoutContext.Provider>
+    
   );
 }
