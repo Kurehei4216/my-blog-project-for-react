@@ -105,14 +105,12 @@ export default function Layout({ children }) {
     setDeleteUrl(api)
   }
 
-  const contextParams = { isDelete }
-
   const fetchDelete = async (url, data) => {
       await axios
         .delete(url)
         .then((data) => {
           setIsDialogOpen(!isDialogOpen);
-          setIsDelete(true);
+          setIsDelete(!isDelete);
           console.log('削除されました')
         })
         .catch((e) => {
@@ -121,7 +119,7 @@ export default function Layout({ children }) {
       };
 
   return (
-    <LayoutContext.Provider value={contextParams}>
+    <LayoutContext.Provider value={isDelete}>
       <ThemeProvider theme={defaultTheme}>
         <Box sx={{ display: "flex" }}>
           <CssBaseline />

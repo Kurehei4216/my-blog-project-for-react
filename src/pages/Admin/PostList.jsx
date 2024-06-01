@@ -204,7 +204,7 @@ export default function EnhancedTable({ handleDisplayDialog }) {
   const history = useNavigate();
   const [rows, setRows] = useState([]);
 
-  const {isDelete} = useContext(LayoutContext);
+  const { isDelete } = useContext(LayoutContext);
   // eslint-disable-next-line no-undef
   useEffect(() => {
     fetchPosts().then((data) => setRows(data));
