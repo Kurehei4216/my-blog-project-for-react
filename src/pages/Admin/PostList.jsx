@@ -15,19 +15,18 @@ import {
   Paper,
   Checkbox,
   IconButton,
-  Tooltip
-} from "@mui/material";
+  Tooltip,
+} from '@mui/material';
 import { alpha } from '@mui/material/styles';
 import DeleteIcon from '@mui/icons-material/Delete';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import { visuallyHidden } from '@mui/utils';
 import { useState, useEffect, useContext } from 'react';
-import axios from "axios";
-import { getDateFormatByFormat } from '../../util/Date'
+import axios from 'axios';
+import { getDateFormatByFormat } from '../../util/Date';
 import { useNavigate } from 'react-router-dom';
 import EditIcon from '@mui/icons-material/Edit';
 import { LayoutContext } from './Layout';
-
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -85,8 +84,14 @@ const headCells = [
 ];
 
 function EnhancedTableHead(props) {
-  const { onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort } =
-    props;
+  const {
+    onSelectAllClick,
+    order,
+    orderBy,
+    numSelected,
+    rowCount,
+    onRequestSort,
+  } = props;
   const createSortHandler = (property) => (event) => {
     onRequestSort(event, property);
   };
@@ -150,7 +155,10 @@ function EnhancedTableToolbar(props) {
         pr: { xs: 1, sm: 1 },
         ...(numSelected > 0 && {
           bgcolor: (theme) =>
-            alpha(theme.palette.primary.main, theme.palette.action.activatedOpacity),
+            alpha(
+              theme.palette.primary.main,
+              theme.palette.action.activatedOpacity,
+            ),
         }),
       }}
     >
@@ -208,8 +216,7 @@ export default function EnhancedTable({ handleDisplayDialog }) {
   // eslint-disable-next-line no-undef
   useEffect(() => {
     fetchPosts().then((data) => setRows(data));
-  }, [isDelete])
-
+  }, [isDelete]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -220,31 +227,33 @@ export default function EnhancedTable({ handleDisplayDialog }) {
       }
     };
     fetchData();
-  }, [])
-
+  }, []);
 
   const fetchPosts = async () => {
     try {
-      return await axios.get(`http://localhost:3000/api/v1/posts`).then((data) => {
-        return data.data.map(value => {
-          return {
-            id: value.id,
-            name: value.title,
-            is_publish: value.is_publish,
-            updated_at: getDateFormatByFormat(value.updated_at, 'YYYY-MM-DD'),
-            carbs: 67,
-            protein: 4.3,
-          }
-        })
-      });
+      return await axios
+        .get(`http://localhost:3000/api/v1/posts`)
+        .then((data) => {
+          return data.data.map((value) => {
+            return {
+              id: value.id,
+              name: value.title,
+              is_publish: value.is_publish,
+              updated_at: getDateFormatByFormat(value.updated_at, 'YYYY-MM-DD'),
+              carbs: 67,
+              protein: 4.3,
+            };
+          });
+        });
     } catch (e) {
       console.log(e);
     }
   };
 
-
-  const handleRedirectWithParameter = (postId) => history(`/admin/post/${postId}`);
-  const handleRedirectToPostEdit = (postId) => history(`/admin/post/${postId}/edit`);
+  const handleRedirectWithParameter = (postId) =>
+    history(`/admin/post/${postId}`);
+  const handleRedirectToPostEdit = (postId) =>
+    history(`/admin/post/${postId}/edit`);
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
@@ -294,21 +303,17 @@ export default function EnhancedTable({ handleDisplayDialog }) {
   const emptyRows =
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
 
-  const visibleRows = 
-      stableSort(rows, getComparator(order, orderBy)).slice(
-        page * rowsPerPage,
-        page * rowsPerPage + rowsPerPage,
-    );
+  const visibleRows = stableSort(rows, getComparator(order, orderBy)).slice(
+    page * rowsPerPage,
+    page * rowsPerPage + rowsPerPage,
+  );
 
   return (
     <Box sx={{ width: '100%' }}>
       <Paper sx={{ width: '100%', mb: 2 }}>
         <EnhancedTableToolbar numSelected={selected.length} />
         <TableContainer>
-          <Table
-            sx={{ minWidth: 750 }}
-            aria-labelledby="tableTitle"
-          >
+          <Table sx={{ minWidth: 750 }} aria-labelledby="tableTitle">
             <EnhancedTableHead
               numSelected={selected.length}
               order={order}
@@ -343,7 +348,9 @@ export default function EnhancedTable({ handleDisplayDialog }) {
                       />
                     </TableCell>
                     <TableCell
-                      onClick={() => { handleRedirectWithParameter(row.id) }}
+                      onClick={() => {
+                        handleRedirectWithParameter(row.id);
+                      }}
                       component="th"
                       id={labelId}
                       scope="row"
@@ -351,20 +358,28 @@ export default function EnhancedTable({ handleDisplayDialog }) {
                     >
                       {row.name}
                     </TableCell>
-                    <TableCell align="right">{row.is_publish ? '公開済み' : '下書き'}</TableCell>
+                    <TableCell align="right">
+                      {row.is_publish ? '公開済み' : '下書き'}
+                    </TableCell>
                     <TableCell align="right">{row.updated_at}</TableCell>
                     <TableCell align="right">
                       <IconButton
                         size="medium"
-                        onClick={() => { handleRedirectToPostEdit(row.id) }}
+                        onClick={() => {
+                          handleRedirectToPostEdit(row.id);
+                        }}
                       >
-                        <EditIcon fontSize="inherit"/>
+                        <EditIcon fontSize="inherit" />
                       </IconButton>
                       <IconButton
                         size="medium"
-                        onClick={() => { handleDisplayDialog(`http://localhost:3000/api/v1/posts/${row.id}/delete`)}}
+                        onClick={() => {
+                          handleDisplayDialog(
+                            `http://localhost:3000/api/v1/posts/${row.id}/delete`,
+                          );
+                        }}
                       >
-                        <DeleteIcon fontSize="inherit"/>
+                        <DeleteIcon fontSize="inherit" />
                       </IconButton>
                     </TableCell>
                   </TableRow>
@@ -388,7 +403,6 @@ export default function EnhancedTable({ handleDisplayDialog }) {
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
       </Paper>
-
     </Box>
   );
 }

@@ -1,12 +1,9 @@
-
 const ImageUploadForm = () => {
   return (
     <>
-      <div>
-        
-      </div>
+      <div></div>
     </>
-  )
-}
+  );
+};
 
-export default ImageUploadForm
+export default ImageUploadForm;

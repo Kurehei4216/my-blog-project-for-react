@@ -10,33 +10,32 @@ import {
   FormControl,
   Select,
   MenuItem,
-  Pagination
-} from "@mui/material";
-import SearchIcon from "@mui/icons-material/Search";
-import axios from "axios";
-import { useEffect, useCallback, useState } from "react";
-import Tag from "./../components/Tag";
-import Category from "./../components/Category";
-import SearchPostResult from "./SearchPostResult";
+  Pagination,
+} from '@mui/material';
+import SearchIcon from '@mui/icons-material/Search';
+import axios from 'axios';
+import { useEffect, useCallback, useState } from 'react';
+import Tag from './../components/Tag';
+import Category from './../components/Category';
+import SearchPostResult from './SearchPostResult';
 
 const Home = () => {
   const [posts, setPost] = useState([]);
-  const [selectedArchive, setSelectedArchive] = useState("2023-12");
+  const [selectedArchive, setSelectedArchive] = useState('2023-12');
   const [tags, setTags] = useState([]);
   const [categories, setCategories] = useState([]);
-  const [searchKeyWord, setSearchKeyWord] = useState("");
+  const [searchKeyWord, setSearchKeyWord] = useState('');
   const [searchedPosts, setSearchedPosts] = useState([]);
 
   const tagStyle = {
-    marginTop: "30px",
+    marginTop: '30px',
   };
 
   const archives = [
-    { id: "2023-12", name: "2023年12月" },
-    { id: "2024-01", name: "2024年1月" },
+    { id: '2023-12', name: '2023年12月' },
+    { id: '2024-01', name: '2024年1月' },
     // 他のアーカイブ
   ];
-
 
   const handleArchiveChange = (event) => {
     console.log(event.target.value);
@@ -56,7 +55,9 @@ const Home = () => {
 
   const fetchTags = async () => {
     try {
-      await axios.get(`http://localhost:3000/api/v1/tags`).then((data) => setTags(data.data));
+      await axios
+        .get(`http://localhost:3000/api/v1/tags`)
+        .then((data) => setTags(data.data));
     } catch (e) {
       console.log(e);
     }
@@ -164,8 +165,8 @@ const Home = () => {
                     label="検索"
                     variant="outlined"
                     sx={{
-                      "& .MuiOutlinedInput-root": { height: 50 },
-                      width: "70%",
+                      '& .MuiOutlinedInput-root': { height: 50 },
+                      width: '70%',
                     }}
                     value={searchKeyWord}
                     onChange={(event) => {
@@ -173,15 +174,15 @@ const Home = () => {
                     }}
                     fullWidth
                   />
-                  <Box sx={{ width: "10%" }}>
+                  <Box sx={{ width: '10%' }}>
                     <Button
                       variant="contained"
                       color="primary"
                       startIcon={<SearchIcon />}
                       style={{ height: 50 }}
                       sx={{
-                        "& .MuiButtonBase-root": {
-                          minWidth: "20px",
+                        '& .MuiButtonBase-root': {
+                          minWidth: '20px',
                         },
                       }}
                       onClick={searchPosts}
@@ -225,9 +226,9 @@ const Home = () => {
               <div>アーカイブ</div>
               <FormControl
                 style={{
-                  minWidth: "100%",
-                  backgroundColor: "white",
-                  color: "black",
+                  minWidth: '100%',
+                  backgroundColor: 'white',
+                  color: 'black',
                 }}
               >
                 <Select

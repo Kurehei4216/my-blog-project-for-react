@@ -1,5 +1,5 @@
-import { Tabs, Tab, Box } from "@mui/material";
-import { useState } from "react";
+import { Tabs, Tab, Box } from '@mui/material';
+import { useState } from 'react';
 
 const NavBar = ({ children }) => {
   const [value, setValue] = useState(0);

@@ -8,23 +8,23 @@ import {
   Select,
   MenuItem,
   FormControl,
-  Switch
-} from "@mui/material";
-import { useState, useEffect } from "react";
+  Switch,
+} from '@mui/material';
+import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import axios from "axios";
+import axios from 'axios';
 import htmlToDraft from 'html-to-draftjs';
-import { EditorState, ContentState } from "draft-js";
-import RichEditor from '../../components/RichEditor'
+import { EditorState, ContentState } from 'draft-js';
+import RichEditor from '../../components/RichEditor';
 
 const PostEdit = () => {
-  const { postId } = useParams()
+  const { postId } = useParams();
   const [tags, setTags] = useState([]);
   const [categories, setCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState('0');
-  const [post, setPost] = useState({})
+  const [post, setPost] = useState({});
   const [editorState, setEditorState] = useState(() =>
-    EditorState.createEmpty()
+    EditorState.createEmpty(),
   );
 
   const fetchCategories = async () => {
@@ -32,7 +32,7 @@ const PostEdit = () => {
       await axios
         .get(`http://localhost:3000/api/v1/categories`)
         .then((data) => {
-          const array = [{ id: '0', name: 'カテゴリーを選んでね' }]
+          const array = [{ id: '0', name: 'カテゴリーを選んでね' }];
           setCategories(data.data.concat(array));
         });
     } catch (e) {
@@ -44,10 +44,10 @@ const PostEdit = () => {
     const tag = {
       id: 1,
       name: tagName,
-      created_at: "2023-12-08T18:34:57.643Z",
-      updated_at: "2023-12-08T18:34:57.643Z",
-      is_deleted: false
-    }
+      created_at: '2023-12-08T18:34:57.643Z',
+      updated_at: '2023-12-08T18:34:57.643Z',
+      is_deleted: false,
+    };
     setTags([...tags, tag]);
   };
 
@@ -60,8 +60,8 @@ const PostEdit = () => {
   };
 
   const handleTurnPublish = (event) => {
-    setPost({...post, is_publish: !post.is_publish })
-  }
+    setPost({ ...post, is_publish: !post.is_publish });
+  };
 
   // 保存ボタンがクリックされたときの処理
   const handleSave = () => {
@@ -79,19 +79,22 @@ const PostEdit = () => {
       .put(`http://localhost:3000/api/v1/posts/${postId}`, params)
       .then((response) => {
         if (response.status == 200) {
-          console.log("記事の投稿成功");
+          console.log('記事の投稿成功');
         }
       })
-      .catch(e => {
+      .catch((e) => {
         console.log(e);
       });
   };
 
   const convertToHtml = (content) => {
     const blockArray = htmlToDraft(JSON.parse(content));
-    const contentState = ContentState.createFromBlockArray(blockArray.contentBlocks, blockArray.entityMap);
+    const contentState = ContentState.createFromBlockArray(
+      blockArray.contentBlocks,
+      blockArray.entityMap,
+    );
     return EditorState.createWithContent(contentState);
-  }
+  };
 
   const fetchPost = async () => {
     try {
@@ -107,12 +110,11 @@ const PostEdit = () => {
     }
   };
 
-
   useEffect(() => {
     const fetchData = async () => {
       try {
         fetchCategories();
-        fetchPost()
+        fetchPost();
       } catch (e) {
         console.log(e);
       }
@@ -125,10 +127,14 @@ const PostEdit = () => {
       <Grid container direction="column">
         <CssBaseline />
         <div style={{ marginLeft: '80px' }}>
-
           <Typography variant="h5" component="div" gutterBottom>
-            ブログ記事編集{" "}
-            <Button variant="outlined" color="primary" onClick={handleSave} style={{ marginLeft: '20px', padding: '7px'}}>
+            ブログ記事編集{' '}
+            <Button
+              variant="outlined"
+              color="primary"
+              onClick={handleSave}
+              style={{ marginLeft: '20px', padding: '7px' }}
+            >
               保存
             </Button>
           </Typography>
@@ -142,7 +148,7 @@ const PostEdit = () => {
                 fullWidth
                 variant="outlined"
                 value={post.title}
-                onChange={(e) => setPost({...post, title: e.target.value})}
+                onChange={(e) => setPost({ ...post, title: e.target.value })}
               />
             </Grid>
             <Grid item xs={2}></Grid>
@@ -153,28 +159,30 @@ const PostEdit = () => {
                 fullWidth
                 variant="outlined"
                 onKeyDown={(e) => {
-                  if (e.key === "Enter" && e.target.value.trim() !== "") {
+                  if (e.key === 'Enter' && e.target.value.trim() !== '') {
                     handleAddTag(e.target.value.trim());
-                    e.target.value = "";
+                    e.target.value = '';
                   }
                 }}
               />
-              {tags.map(val => val.name).map((tag, index) => (
-                <Chip
-                  key={index}
-                  label={tag}
-                  onDelete={() => handleDeleteTag(tag)}
-                  style={{ margin: "4px" }}
-                />
-              ))}
+              {tags
+                .map((val) => val.name)
+                .map((tag, index) => (
+                  <Chip
+                    key={index}
+                    label={tag}
+                    onDelete={() => handleDeleteTag(tag)}
+                    style={{ margin: '4px' }}
+                  />
+                ))}
             </Grid>
             <Grid item xs={2}></Grid>
             <Grid item xs={4}>
               <FormControl
                 style={{
-                  minWidth: "100%",
-                  backgroundColor: "white",
-                  color: "black",
+                  minWidth: '100%',
+                  backgroundColor: 'white',
+                  color: 'black',
                 }}
               >
                 <Select
@@ -193,10 +201,7 @@ const PostEdit = () => {
             </Grid>
 
             <Grid item xs={12}>
-              <Switch
-                checked={post.is_publish}
-                onClick={handleTurnPublish}
-              />
+              <Switch checked={post.is_publish} onClick={handleTurnPublish} />
               <span>公開する</span>
             </Grid>
 

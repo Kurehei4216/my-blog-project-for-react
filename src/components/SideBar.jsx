@@ -4,9 +4,9 @@ import {
   ListItem,
   ListItemText,
   IconButton,
-} from "@mui/material";
-import { styled } from "@mui/material/styles";
-import MenuIcon from "@mui/icons-material/Menu";
+} from '@mui/material';
+import { styled } from '@mui/material/styles';
+import MenuIcon from '@mui/icons-material/Menu';
 import { useNavigate } from 'react-router-dom';
 
 const drawerWidth = 300;
@@ -26,9 +26,9 @@ const SideBar = () => {
   const [open, setOpen] = useState(false);
   const history = useNavigate();
 
-  const handleRedirectToPostList= (postId) => {
+  const handleRedirectToPostList = (postId) => {
     history(`/admin/posts/`); // パスパラメータを含めてリダイレクト
-  }
+  };
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -58,10 +58,10 @@ const SideBar = () => {
         }}
       >
         <List>
-          <ListItem button style={{ paddingRight: "100px" }}>
+          <ListItem button style={{ paddingRight: '100px' }}>
             <ListItemText primary="Dashboard" />
           </ListItem>
-          <ListItem button style={{ paddingRight: "100px" }}>
+          <ListItem button style={{ paddingRight: '100px' }}>
             <ListItemText primary="記事一覧" />
           </ListItem>
           {/* Add more menu items as needed */}
