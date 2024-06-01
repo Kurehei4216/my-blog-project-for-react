@@ -64,9 +64,7 @@ const Home = () => {
 
   const fetchTags = async () => {
     try {
-      await axios.get(`http://localhost:3000/api/v1/tags`).then((data) => {
-        setTags(data.data);
-      });
+      await axios.get(`http://localhost:3000/api/v1/tags`).then((data) => setTags(data.data));
     } catch (e) {
       console.log(e);
     }

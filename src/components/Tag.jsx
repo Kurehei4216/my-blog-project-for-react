@@ -5,14 +5,15 @@ const Tag = (props) => {
     marginTop: "30px",
   };
 
+
   return (
     <>
       <Box style={tagStyle}>
         <div>タグ</div>
         <Card style={{ marginTop: "8px" }}>
           <CardContent>
-            {tags.map((tag) => (
-              <Chip key={tag.id} label={tag.name} color="primary" />
+            {tags.map(([id, name]) => (
+              <Chip key={id} label={name} color="primary" />
             ))}
           </CardContent>
         </Card>
