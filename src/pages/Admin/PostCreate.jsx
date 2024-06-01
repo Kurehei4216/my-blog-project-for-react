@@ -16,6 +16,7 @@ import axios from "axios";
 import { EditorState, convertToRaw } from "draft-js";
 import draftToHtml from 'draftjs-to-html';
 import RichEditor from '../../components/RichEditor'
+import { useNavigate } from 'react-router-dom';
 
 const PostCreate = () => {
   const [tags, setTags] = useState([]);
@@ -27,6 +28,7 @@ const PostCreate = () => {
   const [editorState, setEditorState] = useState(() =>
     EditorState.createEmpty()
   );
+  const history = useNavigate();
 
   const fetchCategories = async () => {
     try {
@@ -80,6 +82,7 @@ const PostCreate = () => {
           console.log("Title:", title);
 
           console.log("記事の投稿成功");
+          history('/admin/posts')
         }
       });
   };
