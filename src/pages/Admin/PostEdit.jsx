@@ -13,9 +13,8 @@ import {
 import { useState, useEffect } from "react";
 import { useParams } from 'react-router-dom';
 import axios from "axios";
-import htmlToDraft from 'draftjs-to-html';
+import htmlToDraft from 'html-to-draftjs';
 import { EditorState, ContentState } from "draft-js";
-import draftToHtml from 'draftjs-to-html';
 import RichEditor from '../../components/RichEditor'
 
 const PostEdit = () => {
@@ -66,7 +65,6 @@ const PostEdit = () => {
 
   // 保存ボタンがクリックされたときの処理
   const handleSave = () => {
-    // ここに投稿を保存する処理を追加
     const params = {
       post: {
         id: post.id,
@@ -89,17 +87,19 @@ const PostEdit = () => {
       });
   };
 
+  const convertToHtml = (content) => {
+    const blockArray = htmlToDraft(JSON.parse(content));
+    const contentState = ContentState.createFromBlockArray(blockArray.contentBlocks, blockArray.entityMap);
+    return EditorState.createWithContent(contentState);
+  }
+
   const fetchPost = async () => {
     try {
       await axios
         .get(`http://localhost:3000/api/v1/posts/${postId}`)
         .then((data) => {
           const content = data.data.post.content;
-          const blockArray = htmlToDraft(content);
-          const contentState = ContentState.createFromBlockArray(blockArray.contentBlocks, blockArray.entityMap);
-          const editor = EditorState.createWithContent(contentState);
-          setEditorState(editor);
-
+          setEditorState(convertToHtml(content));
           Promise.all([setPost(data.data.post), setTags(data.data.tags)]);
         });
     } catch (e) {
