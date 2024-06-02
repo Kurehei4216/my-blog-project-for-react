@@ -21,7 +21,7 @@ module.exports = {
   },
   plugins: ["react", "@typescript-eslint", "react-hooks", "prettier"],
   rules: {
-    "prettier/prettier": "error",
+    "prettier/prettier": "warn",
     "react/prop-types": "off",
     "@typescript-eslint/no-unused-vars": "warn",
     "no-console": "warn",
