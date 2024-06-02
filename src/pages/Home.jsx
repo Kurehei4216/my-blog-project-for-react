@@ -37,7 +37,6 @@ const Home = () => {
   ];
 
   const handleArchiveChange = (event) => {
-    console.log(event.target.value);
     setSelectedArchive(event.target.value);
     // 選択されたアーカイブに対する処理を追加する
   };
