@@ -1,9 +1,16 @@
 import { Grid, CardContent, Typography, Card, Pagination } from "@mui/material";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const SearchPostResult = (props) => {
   const [searchedPosts, setSearchedPosts] = useState([]);
+  const history = useNavigate();
   const { posts, keyword } = props;
+
+  const toPostDetail = (postId) => {
+    console.log(postId);
+    history(`/post/${postId}`);
+  };
 
   return (
     <Grid item xs={8}>
@@ -12,8 +19,14 @@ const SearchPostResult = (props) => {
         {posts.map((postElements) => (
           <>
             {postElements.map((post) => (
+              // eslint-disable-next-line react/jsx-key
               <Grid item xs={6} style={{ cursor: "pointer" }}>
-                <Card>
+                <Card
+                  key={post.id}
+                  onClick={() => {
+                    toPostDetail(post.id);
+                  }}
+                >
                   <CardContent>
                     <Typography variant="h5" gutterBottom>
                       {post.content}

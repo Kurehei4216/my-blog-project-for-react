@@ -8,6 +8,7 @@ import AdminPostList from "./pages/Admin/PostList";
 import AdminPostEdit from "./pages/Admin/PostEdit";
 
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { PostDetail } from "./pages/PostDetail";
 
 function App() {
   return (
@@ -19,6 +20,14 @@ function App() {
             element={
               <Layout>
                 <Home />
+              </Layout>
+            }
+          />
+          <Route
+            path="/post/:postId"
+            element={
+              <Layout>
+                <PostDetail />
               </Layout>
             }
           />
