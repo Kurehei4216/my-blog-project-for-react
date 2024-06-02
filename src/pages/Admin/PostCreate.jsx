@@ -81,8 +81,6 @@ const PostCreate = () => {
       .post(`http://localhost:3000/api/v1/posts`, params)
       .then((response) => {
         if (response.status == 200) {
-          console.log("Title:", title);
-
           console.log("記事の投稿成功");
           history("/admin/posts");
         }
