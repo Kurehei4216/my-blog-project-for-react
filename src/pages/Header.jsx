@@ -1,8 +1,8 @@
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import { useState } from 'react';
-import { Typography } from '@mui/material';
+import AppBar from "@mui/material/AppBar";
+import Box from "@mui/material/Box";
+import Toolbar from "@mui/material/Toolbar";
+import { useState } from "react";
+import { Typography } from "@mui/material";
 
 const Header = () => {
   const [value, setValue] = useState(0);
@@ -15,7 +15,7 @@ const Header = () => {
             <Typography
               variant="h6"
               component="div"
-              sx={{ flexGrow: 1, textAlign: 'center' }}
+              sx={{ flexGrow: 1, textAlign: "center" }}
             >
               クレヘイブログ
             </Typography>

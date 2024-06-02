@@ -1,6 +1,6 @@
-import { Editor } from 'react-draft-wysiwyg';
-import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
-import editorStyle from '../../src/components/editorStyles.module.css';
+import { Editor } from "react-draft-wysiwyg";
+import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
+import editorStyle from "../../src/components/editorStyles.module.css";
 
 const RichEditor = ({ editorState, setEditorState }) => {
   return (
@@ -10,22 +10,22 @@ const RichEditor = ({ editorState, setEditorState }) => {
           onEditorStateChange={setEditorState}
           editorState={editorState}
           toolbar={{
-            options: ['inline', 'blockType', 'list', 'textAlign', 'link'],
+            options: ["inline", "blockType", "list", "textAlign", "link"],
             inline: {
-              options: ['bold', 'strikethrough'],
+              options: ["bold", "strikethrough"],
             },
             blockType: {
               inDropdown: false,
-              options: ['H2'],
+              options: ["H2"],
             },
             list: {
-              options: ['unordered'],
+              options: ["unordered"],
             },
             textAlign: {
-              options: ['center'],
+              options: ["center"],
             },
             link: {
-              options: ['link'],
+              options: ["link"],
             },
           }}
         />

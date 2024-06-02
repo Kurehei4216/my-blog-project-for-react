@@ -12,7 +12,7 @@ const SearchPostResult = (props) => {
         {posts.map((postElements) => (
           <>
             {postElements.map((post) => (
-              <Grid item xs={6}>
+              <Grid item xs={6} style={{ cursor: "pointer" }}>
                 <Card>
                   <CardContent>
                     <Typography variant="h5" gutterBottom>

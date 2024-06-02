@@ -4,10 +4,10 @@ import {
   ListItem,
   ListItemText,
   IconButton,
-} from '@mui/material';
-import { styled } from '@mui/material/styles';
-import MenuIcon from '@mui/icons-material/Menu';
-import { useNavigate } from 'react-router-dom';
+} from "@mui/material";
+import { styled } from "@mui/material/styles";
+import MenuIcon from "@mui/icons-material/Menu";
+import { useNavigate } from "react-router-dom";
 
 const drawerWidth = 300;
 
@@ -58,10 +58,10 @@ const SideBar = () => {
         }}
       >
         <List>
-          <ListItem button style={{ paddingRight: '100px' }}>
+          <ListItem button style={{ paddingRight: "100px" }}>
             <ListItemText primary="Dashboard" />
           </ListItem>
-          <ListItem button style={{ paddingRight: '100px' }}>
+          <ListItem button style={{ paddingRight: "100px" }}>
             <ListItemText primary="記事一覧" />
           </ListItem>
           {/* Add more menu items as needed */}

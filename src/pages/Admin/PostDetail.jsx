@@ -1,6 +1,6 @@
-import { useParams } from 'react-router-dom';
-import { useState, useEffect } from 'react';
-import axios from 'axios';
+import { useParams } from "react-router-dom";
+import { useState, useEffect } from "react";
+import axios from "axios";
 import {
   Chip,
   Grid,
@@ -8,8 +8,8 @@ import {
   CssBaseline,
   Card,
   CardContent,
-} from '@mui/material';
-import parse from 'html-react-parser';
+} from "@mui/material";
+import parse from "html-react-parser";
 
 const PostDetail = () => {
   const { postId } = useParams();
@@ -59,14 +59,14 @@ const PostDetail = () => {
                     gutterBottom
                     align="center"
                   >
-                    {post.title}{' '}
+                    {post.title}{" "}
                   </Typography>
 
                   {tags.map((tag, index) => (
                     <Chip
                       key={tag.id}
                       label={tag.name}
-                      style={{ margin: '4px' }}
+                      style={{ margin: "4px" }}
                     />
                   ))}
                   <h3>本文</h3>

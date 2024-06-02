@@ -10,11 +10,10 @@ import {
   FormControl,
   Select,
   MenuItem,
-  Pagination,
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import axios from "axios";
-import { useEffect, useCallback, useState } from "react";
+import { useEffect, useState } from "react";
 import Tag from "./../components/Tag";
 import Category from "./../components/Category";
 import SearchPostResult from "./SearchPostResult";

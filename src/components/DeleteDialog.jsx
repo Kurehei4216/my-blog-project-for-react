@@ -4,13 +4,13 @@ import {
   DialogContent,
   DialogActions,
   Button,
-} from '@mui/material';
+} from "@mui/material";
 const DeleteDialog = ({ isOpen, handleDelete, url, setIsDialogOpen }) => {
   return (
     <>
       <Dialog open={isOpen} title="モーダルテスト">
         <DialogTitle id="alert-dialog-title">
-          {'記事の削除を行いますか？'}
+          {"記事の削除を行いますか？"}
         </DialogTitle>
         <DialogContent></DialogContent>
         <DialogActions>

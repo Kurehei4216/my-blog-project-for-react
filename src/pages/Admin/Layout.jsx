@@ -119,7 +119,7 @@ export default function Layout({ children }) {
   };
 
   return (
-    <LayoutContext.Provider value={isDelete}>
+    <LayoutContext.Provider value={{ isDelete }}>
       <ThemeProvider theme={defaultTheme}>
         <Box sx={{ display: "flex" }}>
           <CssBaseline />
