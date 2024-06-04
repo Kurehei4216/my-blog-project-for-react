@@ -2,12 +2,15 @@ import { Grid, Breadcrumbs, Link, Card, CardContent } from "@mui/material";
 import Category from "./../components/Category";
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import { useBreadcrumbs } from "../context/BreadcrumbContext";
+import BreadcrumbNavigation from "..//components/BreadcrumbNavigation";
 import axios from "axios";
 
 export const PostDetail = () => {
   const [post, setPost] = useState({});
   const [categories, setCategories] = useState([]);
   const { postId } = useParams();
+  const { addBreadcrumb } = useBreadcrumbs();
 
   const containerStyle = {
     display: "flex",
@@ -24,6 +27,12 @@ export const PostDetail = () => {
     };
     fetchData();
   }, []);
+
+  useEffect(() => {
+    if (post?.title) {
+      addBreadcrumb({ label: `${post.title}`, url: `post/${postId}` });
+    }
+  }, [post, postId]);
 
   const fetchPost = async () => {
     try {
@@ -52,12 +61,8 @@ export const PostDetail = () => {
   return (
     <>
       <Grid container spacing={3}>
-        <Grid item={12}>
-          <Breadcrumbs>
-            <Link color="inherit" href="/">
-              Home
-            </Link>
-          </Breadcrumbs>
+        <Grid item={10}>
+          <BreadcrumbNavigation />
         </Grid>
         <Grid item container xs={12} spacing={3} style={containerStyle}>
           <Grid item xs={1}></Grid>
