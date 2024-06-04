@@ -9,7 +9,6 @@ const SearchPostResult = (props) => {
   const { posts, keyword } = props;
 
   const toPostDetail = (postId) => {
-    console.log(postId);
     history(`/post/${postId}`);
   };
 
