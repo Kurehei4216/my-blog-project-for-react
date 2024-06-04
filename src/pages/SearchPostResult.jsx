@@ -3,7 +3,6 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const SearchPostResult = (props) => {
-  const [searchedPosts, setSearchedPosts] = useState([]);
   const history = useNavigate();
   const [currentPage, setCurrentPage] = useState(1);
   const perPageCount = 10;
@@ -37,8 +36,14 @@ const SearchPostResult = (props) => {
 
   return (
     <Grid item xs={8}>
-      <h3>{`「${keyword}の検索結果」`}</h3>
-      <Grid container spacing={3}>
+      <Card>
+        <CardContent>
+          {" "}
+          <h3 style={{ textAlign: "center" }}>{`「${keyword}の検索結果」`}</h3>
+        </CardContent>
+      </Card>
+
+      <Grid container spacing={3} style={{ marginTop: "16px" }}>
         {currentPosts.map((postElements) => (
           <>
             {postElements.map((post) => (
