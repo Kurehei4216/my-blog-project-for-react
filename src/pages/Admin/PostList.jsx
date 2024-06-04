@@ -27,6 +27,7 @@ import { getDateFormatByFormat } from "../../util/Date";
 import { useNavigate } from "react-router-dom";
 import EditIcon from "@mui/icons-material/Edit";
 import { LayoutContext } from "./Layout";
+import PlusButton from "../../components/button/PlusBotton";
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -403,6 +404,11 @@ export default function EnhancedTable({ handleDisplayDialog }) {
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
       </Paper>
+
+      <PlusButton
+        redirectPath="/admin/post/create"
+        style={{ position: "fix", top: "80%", left: "85%" }}
+      />
     </Box>
   );
 }
