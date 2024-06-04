@@ -14,7 +14,11 @@ const Category = (props) => {
         <Card style={{ marginTop: "8px" }}>
           <List>
             {categories.map((category, index) => (
-              <ListItem key={category.id} component={RouterLink} to={"#"}>
+              <ListItem
+                key={category.id}
+                component={RouterLink}
+                to={`/category/${`${category.name}`}`}
+              >
                 <ListItemText primary={category.name} />
                 <Badge badgeContent={10} color="primary" />
               </ListItem>
