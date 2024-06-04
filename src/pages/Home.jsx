@@ -16,6 +16,8 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import Tag from "./../components/Tag";
 import Category from "./../components/Category";
+import BreadcrumbNavigation from "./../components/BreadcrumbNavigation";
+import { useBreadcrumbs } from "../context/BreadcrumbContext";
 import SearchPostResult from "./SearchPostResult";
 
 const Home = () => {
@@ -25,6 +27,7 @@ const Home = () => {
   const [categories, setCategories] = useState([]);
   const [searchKeyWord, setSearchKeyWord] = useState("");
   const [searchedPosts, setSearchedPosts] = useState([]);
+  const { addBreadcrumb } = useBreadcrumbs();
 
   const tagStyle = {
     marginTop: "30px",
@@ -114,17 +117,12 @@ const Home = () => {
 
     fetchData();
   }, []);
-  console.log(posts);
 
   return (
     <>
       <Grid container spacing={3}>
         <Grid item={12}>
-          <Breadcrumbs>
-            <Link color="inherit" href="/">
-              Home
-            </Link>
-          </Breadcrumbs>
+          <BreadcrumbNavigation />
         </Grid>
 
         {/* <Grid item xs={8}>
