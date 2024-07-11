@@ -5,6 +5,7 @@ import { useParams } from "react-router-dom";
 import { useBreadcrumbs } from "../context/BreadcrumbContext";
 import BreadcrumbNavigation from "..//components/BreadcrumbNavigation";
 import axios from "axios";
+import parse from "html-react-parser";
 
 export const PostDetail = () => {
   const [post, setPost] = useState({});
@@ -39,11 +40,26 @@ export const PostDetail = () => {
       await axios
         .get(`http://localhost:3000/api/v1/posts/${postId}`)
         .then((data) => {
+          const post = data.data.post;
+          const content = parse(data.data.post.content);
+          post.content = content.map((item) => convertFormatString(item));
           setPost(data.data.post);
         });
     } catch (e) {
       console.log(e);
     }
+  };
+
+  const convertFormatString = (data) => {
+    if (typeof data !== "string") {
+      console.log("data", data);
+      return data;
+    }
+    if (data === '"') {
+      return data.replace(/"/g, "");
+    }
+    const formattedData = data.replace(/\\n/g, "");
+    return formattedData;
   };
 
   const fetchCategories = async () => {
@@ -69,7 +85,7 @@ export const PostDetail = () => {
           <Grid item xs={7}>
             <Card>
               <CardContent>
-                <h1>aqaaaaaaaaaaaaa</h1>
+                <h1>{post.title}</h1>
                 <p>{post.content}</p>
               </CardContent>
             </Card>

@@ -17,6 +17,7 @@ import { EditorState, convertToRaw } from "draft-js";
 import draftToHtml from "draftjs-to-html";
 import RichEditor from "../../components/RichEditor";
 import { useNavigate } from "react-router-dom";
+import { PhotoCamera as PhotoCameraIcon } from "@mui/icons-material";
 
 const PostCreate = () => {
   const [tags, setTags] = useState([]);
@@ -28,6 +29,10 @@ const PostCreate = () => {
   const [editorState, setEditorState] = useState(() =>
     EditorState.createEmpty(),
   );
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [preview, setPreview] = useState("");
+  const [fileName, setFileName] = useState("");
+  const [fileUrl, setFileUrl] = useState("");
   const history = useNavigate();
 
   const fetchCategories = async () => {
@@ -63,6 +68,27 @@ const PostCreate = () => {
     setIsPreview(!isPreview);
   };
 
+  const handleButtonClick = () => {
+    document.getElementById("file-input").click();
+  };
+
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    setFileName(file.name);
+    setSelectedFile(file);
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        const url = "https://example.com";
+        setFileUrl(url);
+        setPreview(reader.result);
+      };
+      reader.readAsDataURL(file);
+    } else {
+      setPreview("");
+    }
+  };
+
   // 保存ボタンがクリックされたときの処理
   const handleSave = () => {
     const text = JSON.stringify(
@@ -73,6 +99,7 @@ const PostCreate = () => {
         title: title,
         content: text,
         is_published: true,
+        thumbnail_url: fileUrl,
       },
       tags: tags,
       category: selectedCategory,
@@ -186,6 +213,73 @@ const PostCreate = () => {
             <Grid item xs={12}>
               <Switch checked={isPublish} onClick={handleTurnPublish} />
               <span>公開する</span>
+            </Grid>
+
+            <Grid item xs={12}>
+              <Grid item xs={2}>
+                <Box
+                  sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    borderRadius: 2,
+                    maxWidth: 400,
+                    margin: "auto",
+                    mt: 1,
+                    mb: 2,
+                  }}
+                >
+                  <TextField
+                    id="file-input"
+                    type="file"
+                    accept="image/*"
+                    onChange={handleFileChange}
+                    style={{ display: "none" }}
+                  />
+                  <Button
+                    variant="contained"
+                    component="span"
+                    onClick={handleButtonClick}
+                    startIcon={<PhotoCameraIcon />}
+                    sx={{
+                      bgcolor: "primary.main",
+                      color: "white",
+                      "&:hover": {
+                        bgcolor: "primary.dark",
+                      },
+                    }}
+                  >
+                    サムネイルを選択
+                  </Button>
+                  {preview && (
+                    <>
+                      <Box
+                        sx={{
+                          mt: 2,
+                          borderRadius: 2,
+                          boxShadow: 3,
+                          overflow: "hidden",
+                          width: "100%",
+                          maxHeight: 300,
+                          textAlign: "center",
+                          position: "relative",
+                        }}
+                      >
+                        <img
+                          src={preview}
+                          alt="Selected Image"
+                          style={{
+                            maxWidth: "100%",
+                            maxHeight: "300px",
+                            display: "block",
+                            margin: "auto",
+                          }}
+                        />
+                      </Box>
+                    </>
+                  )}
+                </Box>
+              </Grid>
             </Grid>
 
             <Grid item xs={10}>
