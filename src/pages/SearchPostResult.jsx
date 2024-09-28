@@ -1,6 +1,7 @@
 import { Grid, CardContent, Typography, Card, Pagination } from "@mui/material";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import AccessTimeFilledTwoToneIcon from "@mui/icons-material/AccessTimeFilledTwoTone";
 
 const SearchPostResult = (props) => {
   const history = useNavigate();
@@ -10,6 +11,15 @@ const SearchPostResult = (props) => {
 
   const toPostDetail = (postId) => {
     history(`/post/${postId}`);
+  };
+
+  const convertTimeStampToDate = (timeStamp) => {
+    const dateObject = new Date(timeStamp);
+    const year = dateObject.getFullYear();
+    const month = String(dateObject.getMonth() + 1);
+    const day = String(dateObject.getDate());
+
+    return `${year}年${month}月${day}日`;
   };
 
   const currentPagePosts = () => {
@@ -54,9 +64,37 @@ const SearchPostResult = (props) => {
                     toPostDetail(post.id);
                   }}
                 >
-                  <CardContent>
-                    <Typography variant="h5" gutterBottom>
-                      {post.content}
+                  <CardContent style={{ padding: "0" }}>
+                    <img
+                      src="/umineko.png"
+                      alt="Dummy Icon"
+                      width={30}
+                      height={20}
+                      style={{
+                        width: "100%",
+                        height: "220px",
+                        objectFit: "cover",
+                        display: "block",
+                      }}
+                    />
+                    <p
+                      style={{
+                        display: "flex",
+                        color: "#CACCCE",
+                        paddingLeft: "15px",
+                      }}
+                    >
+                      <AccessTimeFilledTwoToneIcon
+                        style={{ fontSize: "1.4rem" }}
+                      />
+                      {convertTimeStampToDate(post.updated_at)}
+                    </p>
+                    <Typography
+                      variant="h6"
+                      gutterBottom
+                      style={{ paddingLeft: "15px", textAlign: "left" }}
+                    >
+                      {post.title}
                     </Typography>
                   </CardContent>
                 </Card>

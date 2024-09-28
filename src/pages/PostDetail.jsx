@@ -79,7 +79,6 @@ export const PostDetail = () => {
 
   const convertFormatString = (data) => {
     if (typeof data !== "string") {
-      console.log("data", data);
       return data;
     }
     if (data === '"') {
