@@ -20,6 +20,7 @@
     "react-draft-wysiwyg": "^1.15.0",
     "react-router-dom": "^6.20.0",
     "react-scripts": "^5.0.1",
+    "tocbot": "^4.30.0",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
