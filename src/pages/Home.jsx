@@ -190,21 +190,12 @@ const Home = () => {
             <Card style={tagStyle}>
               <CardContent>
                 {/* 著者の情報を追加 */}
-                <h3>プロフィール</h3>
+                <h3 style={{ textAlign: 'center' }}>プロフィール</h3>
                 <img alt />
                 <a href="#">
                   <strong>クレヘイ</strong>
                 </a>
-                <p>
-                  ペルソナ
-                  <br />
-                  20代男性
-                  <br />
-                  エンジニア
-                  <br />
-                </p>
                 <br />
-                <p>現在スタートアップでエンジニアとして働いています</p>
                 <p>
                   【筆者の経歴】新卒でSESのエンジニアとして入社→アフィリエイト系のシステム会社→外食産業系のSassを提供している会社に転職
                 </p>
