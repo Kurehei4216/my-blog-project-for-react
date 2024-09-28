@@ -58,8 +58,6 @@ export const PostDetail = () => {
             .filter((v) => !isInvalidFormatCapital(v));
           setPost(data.data.post);
           setIsPostLoaded(true);
-
-          console.log("fetchPost");
         });
     } catch (e) {
       console.log(e);

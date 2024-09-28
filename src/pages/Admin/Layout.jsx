@@ -111,7 +111,6 @@ export default function Layout({ children }) {
       .then((data) => {
         setIsDialogOpen(!isDialogOpen);
         setIsDelete(!isDelete);
-        console.log("削除されました");
       })
       .catch((e) => {
         console.log(e);

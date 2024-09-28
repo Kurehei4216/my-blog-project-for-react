@@ -10,7 +10,6 @@ const AddPostButton = (props) => {
   const handleClick = () => {
     // ボタンがクリックされたときの処理を記述する
     history(redirectPath);
-    console.log("ボタンがクリックされました");
   };
 
   return (
