@@ -4,15 +4,17 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useBreadcrumbs } from "../context/BreadcrumbContext";
 import BreadcrumbNavigation from "..//components/BreadcrumbNavigation";
-import { isInvalidFormatCapital } from "./../util/removeCapital"
-import AccessTimeFilledTwoToneIcon from '@mui/icons-material/AccessTimeFilledTwoTone';
-import CachedTwoToneIcon from '@mui/icons-material/CachedTwoTone';
+import { TableOfContents } from "../components/TableOfContents";
+import { isInvalidFormatCapital } from "./../util/removeCapital";
+import AccessTimeFilledTwoToneIcon from "@mui/icons-material/AccessTimeFilledTwoTone";
+import CachedTwoToneIcon from "@mui/icons-material/CachedTwoTone";
 import axios from "axios";
 import parse from "html-react-parser";
 
 export const PostDetail = () => {
   const [post, setPost] = useState({});
   const [categories, setCategories] = useState([]);
+  const [isPostLoaded, setIsPostLoaded] = useState(false);
   const { postId } = useParams();
   const { addBreadcrumb } = useBreadcrumbs();
 
@@ -49,10 +51,15 @@ export const PostDetail = () => {
         .then((data) => {
           const post = data.data.post;
           const content = parse(data.data.post.content);
-          post.updated_at = convertTimeStampToDate(data.data.post.updated_at)
-          post.created_at = convertTimeStampToDate(data.data.post.created_at)
-          post.content = content.map((item) => convertFormatString(item)).filter((v) => !isInvalidFormatCapital(v));
+          post.updated_at = convertTimeStampToDate(data.data.post.updated_at);
+          post.created_at = convertTimeStampToDate(data.data.post.created_at);
+          post.content = content
+            .map((item) => convertFormatString(item))
+            .filter((v) => !isInvalidFormatCapital(v));
           setPost(data.data.post);
+          setIsPostLoaded(true);
+
+          console.log("fetchPost");
         });
     } catch (e) {
       console.log(e);
@@ -86,11 +93,11 @@ export const PostDetail = () => {
   const convertTimeStampToDate = (timeStamp) => {
     const dateObject = new Date(timeStamp);
     const year = dateObject.getFullYear();
-    const month = String(dateObject.getMonth() + 1)
-    const day = String(dateObject.getDate())
+    const month = String(dateObject.getMonth() + 1);
+    const day = String(dateObject.getDate());
 
-    return `${year}年${month}月${day}日`
-  }
+    return `${year}年${month}月${day}日`;
+  };
 
   return (
     <>
@@ -102,41 +109,47 @@ export const PostDetail = () => {
               <CardContent>
                 <BreadcrumbNavigation />
                 <h1>{post.title}</h1>
-                <p style={{ display: "flex", color: '#CACCCE' }}>
-                  <AccessTimeFilledTwoToneIcon style={{ fontSize: '1.4rem' }}/>{post.updated_at}
-                  <CachedTwoToneIcon style={{ fontSize: '1.4rem' }}/>{post.created_at}
+                <p style={{ display: "flex", color: "#CACCCE" }}>
+                  <AccessTimeFilledTwoToneIcon style={{ fontSize: "1.4rem" }} />
+                  {post.updated_at}
+                  <CachedTwoToneIcon style={{ fontSize: "1.4rem" }} />
+                  {post.created_at}
                 </p>
-                <p>{post.content}</p>
+                <p className="js-toc-content">{post.content}</p>
               </CardContent>
             </Card>
           </Grid>
           <Grid item xs={4}>
             <Card style={cardStyle}>
-              <CardContent>
-                {/* 著者の情報を追加 */}
+              <CardContent
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                }}
+              >
                 <h3>プロフィール</h3>
-                <img alt />
-                <a href="#">
+                <a style={{ marginBottom: "8px" }} href="#">
                   <strong>クレヘイ</strong>
                 </a>
-                <p>
-                  ペルソナ
-                  <br />
-                  20代男性
-                  <br />
-                  エンジニア
-                  <br />
-                </p>
-                <br />
-                <p>現在スタートアップでエンジニアとして働いています</p>
+                <img
+                  src="/umineko.png"
+                  alt="Dummy Icon"
+                  width={100}
+                  height={100}
+                  style={{
+                    borderRadius: "50%",
+                    objectFit: "cover",
+                  }}
+                />
                 <p>
                   【筆者の経歴】新卒でSESのエンジニアとして入社→アフィリエイト系のシステム会社→外食産業系のSassを提供している会社に転職
-                </p>
-                <p>
+                  <br></br>
                   詳しいプロフィールは<a href="#">こちら</a>
                 </p>
               </CardContent>
             </Card>
+            <TableOfContents isPostLoaded={isPostLoaded} />
             <Category categories={categories} />
           </Grid>
         </Grid>
