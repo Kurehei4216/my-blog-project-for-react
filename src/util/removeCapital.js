@@ -1,0 +1,1 @@
+export const isInvalidFormatCapital = (capital) => ["", "\""].includes(capital)
