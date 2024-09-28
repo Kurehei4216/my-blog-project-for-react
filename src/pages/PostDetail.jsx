@@ -4,6 +4,9 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useBreadcrumbs } from "../context/BreadcrumbContext";
 import BreadcrumbNavigation from "..//components/BreadcrumbNavigation";
+import { isInvalidFormatCapital } from "./../util/removeCapital"
+import AccessTimeFilledTwoToneIcon from '@mui/icons-material/AccessTimeFilledTwoTone';
+import CachedTwoToneIcon from '@mui/icons-material/CachedTwoTone';
 import axios from "axios";
 import parse from "html-react-parser";
 
@@ -16,6 +19,10 @@ export const PostDetail = () => {
   const containerStyle = {
     display: "flex",
     alignItems: "stretch",
+  };
+
+  const cardStyle = {
+    marginTop: "15px",
   };
 
   useEffect(() => {
@@ -42,8 +49,22 @@ export const PostDetail = () => {
         .then((data) => {
           const post = data.data.post;
           const content = parse(data.data.post.content);
-          post.content = content.map((item) => convertFormatString(item));
+          post.updated_at = convertTimeStampToDate(data.data.post.updated_at)
+          post.created_at = convertTimeStampToDate(data.data.post.created_at)
+          post.content = content.map((item) => convertFormatString(item)).filter((v) => !isInvalidFormatCapital(v));
           setPost(data.data.post);
+        });
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const fetchCategories = async () => {
+    try {
+      await axios
+        .get(`http://localhost:3000/api/v1/categories`)
+        .then((data) => {
+          setCategories(data.data);
         });
     } catch (e) {
       console.log(e);
@@ -62,36 +83,35 @@ export const PostDetail = () => {
     return formattedData;
   };
 
-  const fetchCategories = async () => {
-    try {
-      await axios
-        .get(`http://localhost:3000/api/v1/categories`)
-        .then((data) => {
-          setCategories(data.data);
-        });
-    } catch (e) {
-      console.log(e);
-    }
-  };
+  const convertTimeStampToDate = (timeStamp) => {
+    const dateObject = new Date(timeStamp);
+    const year = dateObject.getFullYear();
+    const month = String(dateObject.getMonth() + 1)
+    const day = String(dateObject.getDate())
+
+    return `${year}年${month}月${day}日`
+  }
 
   return (
     <>
       <Grid container spacing={3}>
-        <Grid item={10}>
-          <BreadcrumbNavigation />
-        </Grid>
         <Grid item container xs={12} spacing={3} style={containerStyle}>
           <Grid item xs={1}></Grid>
           <Grid item xs={7}>
-            <Card>
+            <Card style={cardStyle}>
               <CardContent>
+                <BreadcrumbNavigation />
                 <h1>{post.title}</h1>
+                <p style={{ display: "flex", color: '#CACCCE' }}>
+                  <AccessTimeFilledTwoToneIcon style={{ fontSize: '1.4rem' }}/>{post.updated_at}
+                  <CachedTwoToneIcon style={{ fontSize: '1.4rem' }}/>{post.created_at}
+                </p>
                 <p>{post.content}</p>
               </CardContent>
             </Card>
           </Grid>
           <Grid item xs={4}>
-            <Card>
+            <Card style={cardStyle}>
               <CardContent>
                 {/* 著者の情報を追加 */}
                 <h3>プロフィール</h3>
