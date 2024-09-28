@@ -5,6 +5,7 @@ import { useParams } from "react-router-dom";
 import { useBreadcrumbs } from "../context/BreadcrumbContext";
 import BreadcrumbNavigation from "..//components/BreadcrumbNavigation";
 import { TableOfContents } from "../components/TableOfContents";
+import { AuthorProfile } from "./AuthorProfile";
 import { isInvalidFormatCapital } from "./../util/removeCapital";
 import AccessTimeFilledTwoToneIcon from "@mui/icons-material/AccessTimeFilledTwoTone";
 import CachedTwoToneIcon from "@mui/icons-material/CachedTwoTone";
@@ -118,35 +119,7 @@ export const PostDetail = () => {
             </Card>
           </Grid>
           <Grid item xs={4}>
-            <Card style={cardStyle}>
-              <CardContent
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                }}
-              >
-                <h3>プロフィール</h3>
-                <a style={{ marginBottom: "8px" }} href="#">
-                  <strong>クレヘイ</strong>
-                </a>
-                <img
-                  src="/umineko.png"
-                  alt="Dummy Icon"
-                  width={100}
-                  height={100}
-                  style={{
-                    borderRadius: "50%",
-                    objectFit: "cover",
-                  }}
-                />
-                <p>
-                  【筆者の経歴】新卒でSESのエンジニアとして入社→アフィリエイト系のシステム会社→外食産業系のSassを提供している会社に転職
-                  <br></br>
-                  詳しいプロフィールは<a href="#">こちら</a>
-                </p>
-              </CardContent>
-            </Card>
+            <AuthorProfile />
             <TableOfContents isPostLoaded={isPostLoaded} />
             <Category categories={categories} />
           </Grid>
