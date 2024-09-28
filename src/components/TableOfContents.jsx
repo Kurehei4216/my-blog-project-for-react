@@ -1,6 +1,7 @@
 import { Box, Card } from "@mui/material";
 import { useEffect } from "react";
 import tocbot from "tocbot";
+import "../css/Toc.css";
 
 export const TableOfContents = (isPostLoaded) => {
   const categoryStyle = {

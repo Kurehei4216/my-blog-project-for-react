@@ -1,0 +1,26 @@
+.toc-list {
+    list-style-type: none; /* デフォルトのリストスタイルを消す */
+    padding-left: 10px;
+  }
+  
+  .toc-list-item {
+    margin-bottom: 10px; /* リストアイテムに余白を追加 */
+  }
+  
+  .toc-link {
+    color: #6B6B6B; /* 目次のリンクの色をカスタマイズ */
+    text-decoration: none;
+  }
+  
+  .toc-link:hover {
+    color: #8A8A8A; /* ホバー時の色を少し明るく */
+    text-decoration: underline; /* リンクをホバーしたときに下線を表示 */
+  }
+  
+  .is-active-link {
+    font-weight: bold; /* 現在アクティブな見出しを太字に */
+  }
+
+  .toc-link:hover {
+    text-decoration: none; /* ホバー時も下線を消す */
+  }
