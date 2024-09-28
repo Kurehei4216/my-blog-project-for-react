@@ -1,4 +1,4 @@
-import { Box, List, ListItem, ListItemText, Badge, Card } from "@mui/material";
+import { Box, Card } from "@mui/material";
 import { useEffect } from "react";
 import tocbot from "tocbot";
 

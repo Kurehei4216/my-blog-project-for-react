@@ -1,7 +1,5 @@
 import {
   Grid,
-  Breadcrumbs,
-  Link,
   Card,
   CardContent,
   TextField,
@@ -18,6 +16,7 @@ import Tag from "./../components/Tag";
 import Category from "./../components/Category";
 import BreadcrumbNavigation from "./../components/BreadcrumbNavigation";
 import { useBreadcrumbs } from "../context/BreadcrumbContext";
+import { AuthorProfile } from "./AuthorProfile";
 import SearchPostResult from "./SearchPostResult";
 
 const Home = () => {
@@ -187,24 +186,7 @@ const Home = () => {
                 </Box>
               </CardContent>
             </Card>
-            <Card style={tagStyle}>
-              <CardContent>
-                {/* 著者の情報を追加 */}
-                <h3 style={{ textAlign: 'center' }}>プロフィール</h3>
-                <img alt />
-                <a href="#">
-                  <strong>クレヘイ</strong>
-                </a>
-                <br />
-                <p>
-                  【筆者の経歴】新卒でSESのエンジニアとして入社→アフィリエイト系のシステム会社→外食産業系のSassを提供している会社に転職
-                </p>
-                <p>
-                  詳しいプロフィールは<a href="#">こちら</a>
-                </p>
-              </CardContent>
-            </Card>
-
+            <AuthorProfile />
             <Tag tags={tags} />
             <Category categories={categories} />
 
