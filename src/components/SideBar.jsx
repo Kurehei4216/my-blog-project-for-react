@@ -64,7 +64,6 @@ const SideBar = () => {
           <ListItem button style={{ paddingRight: "100px" }}>
             <ListItemText primary="記事一覧" />
           </ListItem>
-          {/* Add more menu items as needed */}
         </List>
       </Drawer>
     </>
