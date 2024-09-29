@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { IconButton, useTheme } from "@mui/material";
+import { IconButton, useTheme, Typography } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 
 const AddPostButton = (props) => {
@@ -19,15 +19,25 @@ const AddPostButton = (props) => {
       aria-label="add post"
       style={style}
     >
-      <AddIcon
+      <Typography
+        variant="button" // ここでフォントスタイルを指定
         style={{
           backgroundColor: theme.palette.primary.main,
           color: "white",
-          borderRadius: "50%",
-          width: "64px",
-          height: "64px",
+          width: "92px",
+          display: "flex",
+          padding: "5px",
+          borderRadius: "8px 8px 8px 8px ",
         }}
-      />
+      >
+        新規作成
+        <AddIcon
+          style={{
+            backgroundColor: theme.palette.primary.main,
+            color: "white",
+          }}
+        />
+      </Typography>
     </IconButton>
   );
 };
