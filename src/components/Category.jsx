@@ -1,4 +1,4 @@
-import { Box, List, ListItem, ListItemText, Badge, Card } from "@mui/material";
+import { Box, List, ListItem, ListItemText, Card } from "@mui/material";
 import { Link as RouterLink } from "react-router-dom";
 import CategoryIcon from "@mui/icons-material/Category";
 
@@ -17,7 +17,7 @@ const Category = (props) => {
         </div>
         <Card style={{ marginTop: "8px" }}>
           <List>
-            {categories.map((category, index) => (
+            {categories.map((category) => (
               <ListItem
                 key={category.id}
                 component={RouterLink}
