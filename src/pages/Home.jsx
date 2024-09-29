@@ -18,6 +18,7 @@ import BreadcrumbNavigation from "./../components/BreadcrumbNavigation";
 import { useBreadcrumbs } from "../context/BreadcrumbContext";
 import { AuthorProfile } from "./AuthorProfile";
 import SearchPostResult from "./SearchPostResult";
+import AccessTimeFilledTwoToneIcon from "@mui/icons-material/AccessTimeFilledTwoTone";
 
 const Home = () => {
   const [posts, setPost] = useState([]);
@@ -192,12 +193,16 @@ const Home = () => {
 
             {/* アーカイブ */}
             <Box style={tagStyle}>
-              <div>アーカイブ</div>
+              <div style={{ display: "flex" }}>
+                <AccessTimeFilledTwoToneIcon style={{ fontSize: "1.4rem" }} />
+                <span></span>アーカイブ
+              </div>
               <FormControl
                 style={{
                   minWidth: "100%",
                   backgroundColor: "white",
                   color: "black",
+                  marginTop: "8px",
                 }}
               >
                 <Select
