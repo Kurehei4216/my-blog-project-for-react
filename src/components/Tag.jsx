@@ -32,7 +32,7 @@ const Tag = (props) => {
                   label={tagName}
                   color="primary"
                   style={{ cursor: "pointer" }}
-                  onClick={()=> toTagsPost(tag.name)}
+                  onClick={() => toTagsPost(tag.name)}
                 />
               );
             })}

@@ -10,7 +10,7 @@ import {
   FormControl,
   Switch,
 } from "@mui/material";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import htmlToDraft from "html-to-draftjs";
@@ -59,7 +59,7 @@ const PostEdit = () => {
     setSelectedCategory(event.target.value);
   };
 
-  const handleTurnPublish = (event) => {
+  const handleTurnPublish = () => {
     setPost({ ...post, is_publish: !post.is_publish });
   };
 
@@ -96,31 +96,31 @@ const PostEdit = () => {
     return EditorState.createWithContent(contentState);
   };
 
-  const fetchPost = async () => {
+  const fetchPost = useCallback(async () => {
     try {
-      await axios
-        .get(`http://localhost:3000/api/v1/posts/${postId}`)
-        .then((data) => {
-          const content = data.data.post.content;
-          setEditorState(convertToHtml(content));
-          Promise.all([setPost(data.data.post), setTags(data.data.tags)]);
-        });
+      const response = await axios.get(
+        `http://localhost:3000/api/v1/posts/${postId}`,
+      );
+      const content = response.data.post.content;
+
+      setEditorState(convertToHtml(content));
+      setPost(response.data.post);
+      setTags(response.data.tags);
     } catch (e) {
       console.log(e);
     }
-  };
+  }, [postId]);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        fetchCategories();
-        fetchPost();
+        Promise.all([fetchCategories(), fetchPost()]);
       } catch (e) {
         console.log(e);
       }
     };
     fetchData();
-  }, []);
+  }, [fetchPost]);
 
   return (
     <>

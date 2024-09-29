@@ -1,6 +1,6 @@
-import { Grid, Breadcrumbs, Link, Card, CardContent } from "@mui/material";
+import { Grid, Card, CardContent } from "@mui/material";
 import Category from "./../components/Category";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useParams } from "react-router-dom";
 import { useBreadcrumbs } from "../context/BreadcrumbContext";
 import BreadcrumbNavigation from "..//components/BreadcrumbNavigation";
@@ -28,42 +28,44 @@ export const PostDetail = () => {
     marginTop: "15px",
   };
 
+  const fetchPost = useCallback(async () => {
+    try {
+      const response = await axios.get(
+        `http://localhost:3000/api/v1/posts/${postId}`,
+      );
+      const post = response.data.post;
+
+      const content = parse(post.content);
+      post.updated_at = convertTimeStampToDate(post.updated_at);
+      post.created_at = convertTimeStampToDate(post.created_at);
+
+      post.content = content
+        .map((item) => convertFormatString(item))
+        .filter((v) => !isInvalidFormatCapital(v));
+
+      setPost(post);
+      setIsPostLoaded(true);
+    } catch (e) {
+      console.log(e);
+    }
+  }, [postId, setPost, setIsPostLoaded]);
+
   useEffect(() => {
     const fetchData = async () => {
       try {
-        Promise.all([fetchPost(), fetchCategories()]);
+        await Promise.all([fetchPost(), fetchCategories()]);
       } catch (e) {
         console.log(e);
       }
     };
     fetchData();
-  }, []);
+  }, [fetchPost]);
 
   useEffect(() => {
     if (post?.title) {
       addBreadcrumb({ label: `${post.title}`, url: `post/${postId}` });
     }
-  }, [post, postId]);
-
-  const fetchPost = async () => {
-    try {
-      await axios
-        .get(`http://localhost:3000/api/v1/posts/${postId}`)
-        .then((data) => {
-          const post = data.data.post;
-          const content = parse(data.data.post.content);
-          post.updated_at = convertTimeStampToDate(data.data.post.updated_at);
-          post.created_at = convertTimeStampToDate(data.data.post.created_at);
-          post.content = content
-            .map((item) => convertFormatString(item))
-            .filter((v) => !isInvalidFormatCapital(v));
-          setPost(data.data.post);
-          setIsPostLoaded(true);
-        });
-    } catch (e) {
-      console.log(e);
-    }
-  };
+  }, [post, postId, addBreadcrumb]);
 
   const fetchCategories = async () => {
     try {

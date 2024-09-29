@@ -29,9 +29,9 @@ const PostCreate = () => {
   const [editorState, setEditorState] = useState(() =>
     EditorState.createEmpty(),
   );
-  const [selectedFile, setSelectedFile] = useState(null);
+  // const [selectedFile, setSelectedFile] = useState(null);
   const [preview, setPreview] = useState("");
-  const [fileName, setFileName] = useState("");
+  // const [fileName, setFileName] = useState("");
   const [fileUrl, setFileUrl] = useState("");
   const history = useNavigate();
 
@@ -74,8 +74,8 @@ const PostCreate = () => {
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
-    setFileName(file.name);
-    setSelectedFile(file);
+    // setFileName(file.name);
+    // setSelectedFile(file);
     if (file) {
       const reader = new FileReader();
       reader.onloadend = () => {

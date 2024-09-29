@@ -15,19 +15,17 @@ import { useEffect, useState } from "react";
 import Tag from "./../components/Tag";
 import Category from "./../components/Category";
 import BreadcrumbNavigation from "./../components/BreadcrumbNavigation";
-import { useBreadcrumbs } from "../context/BreadcrumbContext";
 import { AuthorProfile } from "./AuthorProfile";
 import SearchPostResult from "./SearchPostResult";
 import AccessTimeFilledTwoToneIcon from "@mui/icons-material/AccessTimeFilledTwoTone";
 
 const Home = () => {
-  const [posts, setPost] = useState([]);
+  // const [posts, setPost] = useState([]);
   const [selectedArchive, setSelectedArchive] = useState("2023-12");
   const [tags, setTags] = useState([]);
   const [categories, setCategories] = useState([]);
   const [searchKeyWord, setSearchKeyWord] = useState("");
   const [searchedPosts, setSearchedPosts] = useState([]);
-  const { addBreadcrumb } = useBreadcrumbs();
 
   const tagStyle = {
     marginTop: "30px",
@@ -46,8 +44,8 @@ const Home = () => {
 
   const fetchPosts = async () => {
     try {
-      await axios.get(`http://localhost:3000/api/v1/posts`).then((data) => {
-        setPost(data.data);
+      await axios.get(`http://localhost:3000/api/v1/posts`).then(() => {
+        // setPost(data.data);
       });
     } catch (e) {
       console.log(e);

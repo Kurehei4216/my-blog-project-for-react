@@ -1,9 +1,9 @@
 import { Tabs, Tab, Box } from "@mui/material";
 import { useState } from "react";
 
-const NavBar = ({ children }) => {
+const NavBar = () => {
   const [value, setValue] = useState(0);
-  const handleChange = (event, newValue) => {
+  const handleChange = (newValue) => {
     setValue(newValue);
   };
   return (

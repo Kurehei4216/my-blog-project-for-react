@@ -105,10 +105,10 @@ export default function Layout({ children }) {
     setDeleteUrl(api);
   };
 
-  const fetchDelete = async (url, data) => {
+  const fetchDelete = async (url) => {
     await axios
       .delete(url)
-      .then((data) => {
+      .then(() => {
         setIsDialogOpen(!isDialogOpen);
         setIsDelete(!isDelete);
       })

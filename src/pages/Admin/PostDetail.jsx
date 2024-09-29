@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 import {
   Chip,
@@ -16,32 +16,31 @@ const PostDetail = () => {
   const [post, setPost] = useState({});
   const [tags, setTags] = useState([]);
 
-  const fetchPost = async () => {
+  const fetchPost = useCallback(async () => {
     try {
-      await axios
-        .get(`http://localhost:3000/api/v1/posts/${postId}`)
-        .then((data) => {
-          const post = data.data.post;
-          const content = parse(post.content);
-          post.content = content;
-          setPost(data.data.post);
-          setTags(data.data.tags);
-        });
+      const response = await axios.get(
+        `http://localhost:3000/api/v1/posts/${postId}`,
+      );
+      const post = response.data.post;
+      const content = parse(post.content);
+      post.content = content;
+      setPost(response.data.post);
+      setTags(response.data.tags);
     } catch (e) {
       console.log(e);
     }
-  };
+  }, [postId, setPost, setTags]);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        fetchPost();
+        await fetchPost();
       } catch (e) {
         console.log(e);
       }
     };
     fetchData();
-  }, []);
+  }, [fetchPost]);
 
   return (
     <>
@@ -62,7 +61,7 @@ const PostDetail = () => {
                     {post.title}{" "}
                   </Typography>
 
-                  {tags.map((tag, index) => (
+                  {tags.map((tag) => (
                     <Chip
                       key={tag.id}
                       label={tag.name}

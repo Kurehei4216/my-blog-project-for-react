@@ -330,7 +330,7 @@ export default function EnhancedTable({ handleDisplayDialog }) {
             onSearch={handleSearchForm}
             getDateFormatByFormat={getDateFormatByFormat}
           />
-          <PlusButton redirectPath="/admin/post/create"/>
+          <PlusButton redirectPath="/admin/post/create" />
         </div>
 
         <TableContainer>

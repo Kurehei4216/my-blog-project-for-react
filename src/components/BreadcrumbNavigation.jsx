@@ -1,7 +1,7 @@
 // BreadcrumbNavigation.jsx
 import React from "react";
 import { useBreadcrumbs } from "../context/BreadcrumbContext";
-import { Breadcrumbs, Typography, Link } from "@mui/material";
+import { Breadcrumbs, Link } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import { useNavigate } from "react-router-dom";
 
@@ -17,9 +17,7 @@ const BreadcrumbNavigation = () => {
 
   const handleRemoveClick = (index) => removeBreadcrumb(index);
 
-  const toPage=(breadcrumb)=>{
-    navigate(breadcrumb.url);
-  }
+  const toPage = (breadcrumb) => navigate(breadcrumb.url);
 
   return (
     <Breadcrumbs aria-label="breadcrumb">
