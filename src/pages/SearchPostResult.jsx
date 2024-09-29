@@ -48,7 +48,7 @@ const SearchPostResult = (props) => {
       <Card>
         <CardContent>
           {" "}
-          <h3 style={{ textAlign: "center" }}>{`「${keyword}の検索結果」`}</h3>
+          <h3 style={{ textAlign: "center" }}>{`「${keyword}」の検索結果`}</h3>
         </CardContent>
       </Card>
 

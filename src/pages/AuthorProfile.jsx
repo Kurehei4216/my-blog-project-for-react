@@ -4,6 +4,7 @@ export const AuthorProfile = () => {
   const cardStyle = {
     marginTop: "15px",
   };
+
   return (
     <>
       <Card style={cardStyle}>
@@ -28,7 +29,7 @@ export const AuthorProfile = () => {
               objectFit: "cover",
             }}
           />
-          <p>
+          <p style={{ marginBottom: "0" }}>
             【筆者の経歴】<br></br>
             新卒でSESのエンジニアとして入社→アフィリエイト系のシステム会社→外食産業系のSassを提供している会社に転職
           </p>

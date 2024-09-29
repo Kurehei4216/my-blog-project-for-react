@@ -4,10 +4,13 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import Category from "./../components/Category";
 import { useNavigate } from "react-router-dom";
+import { AuthorProfile } from "./AuthorProfile";
+import Tag from "./../components/Tag";
 
 export const CategoryPosts = () => {
   const [posts, setPosts] = useState([]);
   const [category, setCategory] = useState({});
+  const [tags, setTags] = useState([]);
   const [categories, setCategories] = useState([]);
   const { name } = useParams();
   const history = useNavigate();
@@ -26,13 +29,12 @@ export const CategoryPosts = () => {
         const category = fetchedCategories.find(
           (category) => category.name === name,
         );
-
         fetchCategoryPost(category);
       } catch (e) {
         console.log(e);
       }
     };
-    fetchData();
+    Promise.all([fetchData(), fetchTags()]);
   }, [name]);
 
   const fetchCategoryPost = async (category) => {
@@ -70,6 +72,16 @@ export const CategoryPosts = () => {
           setCategories(data.data);
           return data.data;
         });
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const fetchTags = async () => {
+    try {
+      await axios
+        .get(`http://localhost:3000/api/v1/tags`)
+        .then((data) => setTags(data.data));
     } catch (e) {
       console.log(e);
     }
@@ -113,32 +125,8 @@ export const CategoryPosts = () => {
             </Grid>
           </Grid>
           <Grid item xs={4}>
-            <Card>
-              <CardContent>
-                {/* 著者の情報を追加 */}
-                <h3>プロフィール</h3>
-                <img alt />
-                <a href="#">
-                  <strong>クレヘイ</strong>
-                </a>
-                <p>
-                  ペルソナ
-                  <br />
-                  20代男性
-                  <br />
-                  エンジニア
-                  <br />
-                </p>
-                <br />
-                <p>現在スタートアップでエンジニアとして働いています</p>
-                <p>
-                  【筆者の経歴】新卒でSESのエンジニアとして入社→アフィリエイト系のシステム会社→外食産業系のSassを提供している会社に転職
-                </p>
-                <p>
-                  詳しいプロフィールは<a href="#">こちら</a>
-                </p>
-              </CardContent>
-            </Card>
+            <AuthorProfile />
+            <Tag tags={tags} />
             <Category categories={categories} />
           </Grid>
         </Grid>
