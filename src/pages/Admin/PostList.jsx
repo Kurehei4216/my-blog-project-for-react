@@ -28,16 +28,7 @@ import { useNavigate } from "react-router-dom";
 import EditIcon from "@mui/icons-material/Edit";
 import { LayoutContext } from "./Layout";
 import PlusButton from "../../components/button/PlusBotton";
-
-function descendingComparator(a, b, orderBy) {
-  if (b[orderBy] < a[orderBy]) {
-    return -1;
-  }
-  if (b[orderBy] > a[orderBy]) {
-    return 1;
-  }
-  return 0;
-}
+import SimpleSearchForm from "../../components/SimpleSearchForm";
 
 function getComparator(order, orderBy) {
   return order === "desc"
@@ -56,6 +47,16 @@ function stableSort(array, comparator) {
   });
   return stabilizedThis.map((el) => el[0]);
 }
+
+const descendingComparator = (a, b, orderBy) => {
+  if (b[orderBy] < a[orderBy]) {
+    return -1;
+  }
+  if (b[orderBy] > a[orderBy]) {
+    return 1;
+  }
+  return 0;
+};
 
 const headCells = [
   {
@@ -211,18 +212,19 @@ export default function EnhancedTable({ handleDisplayDialog }) {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const history = useNavigate();
-  const [rows, setRows] = useState([]);
+  const [postRows, setPostRows] = useState([]);
+  const [searchPosts, setSearchPosts] = useState([]);
 
   const { isDelete } = useContext(LayoutContext);
   // eslint-disable-next-line no-undef
   useEffect(() => {
-    fetchPosts().then((data) => setRows(data));
+    fetchPosts().then((data) => setPostRows(data));
   }, [isDelete]);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        await fetchPosts().then((data) => setRows(data));
+        await fetchPosts().then((data) => setPostRows(data));
       } catch (e) {
         console.log(e);
       }
@@ -264,7 +266,7 @@ export default function EnhancedTable({ handleDisplayDialog }) {
 
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
-      const newSelected = rows.map((n) => n.id);
+      const newSelected = postRows.map((n) => n.id);
       setSelected(newSelected);
       return;
     }
@@ -299,20 +301,38 @@ export default function EnhancedTable({ handleDisplayDialog }) {
     setPage(0);
   };
 
+  const handleSearchForm = (result) => {
+    return setSearchPosts(result);
+  };
+
   const isSelected = (id) => selected.indexOf(id) !== -1;
 
   const emptyRows =
-    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
+    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - postRows.length) : 0;
 
-  const visibleRows = stableSort(rows, getComparator(order, orderBy)).slice(
-    page * rowsPerPage,
-    page * rowsPerPage + rowsPerPage,
-  );
+  const visibleRows = stableSort(
+    searchPosts.length > 0 ? searchPosts : postRows,
+    getComparator(order, orderBy),
+  ).slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
 
   return (
     <Box sx={{ width: "100%" }}>
       <Paper sx={{ width: "100%", mb: 2 }}>
         <EnhancedTableToolbar numSelected={selected.length} />
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: "10px",
+          }}
+        >
+          <SimpleSearchForm
+            onSearch={handleSearchForm}
+            getDateFormatByFormat={getDateFormatByFormat}
+          />
+          <PlusButton redirectPath="/admin/post/create"/>
+        </div>
+
         <TableContainer>
           <Table sx={{ minWidth: 750 }} aria-labelledby="tableTitle">
             <EnhancedTableHead
@@ -321,7 +341,7 @@ export default function EnhancedTable({ handleDisplayDialog }) {
               orderBy={orderBy}
               onSelectAllClick={handleSelectAllClick}
               onRequestSort={handleRequestSort}
-              rowCount={rows.length}
+              rowCount={postRows.length}
             />
             <TableBody>
               {visibleRows.map((row, index) => {
@@ -397,18 +417,13 @@ export default function EnhancedTable({ handleDisplayDialog }) {
         <TablePagination
           rowsPerPageOptions={[5, 10, 25]}
           component="div"
-          count={rows.length}
+          count={postRows.length}
           rowsPerPage={rowsPerPage}
           page={page}
           onPageChange={handleChangePage}
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
       </Paper>
-
-      <PlusButton
-        redirectPath="/admin/post/create"
-        style={{ position: "fix", top: "80%", left: "85%" }}
-      />
     </Box>
   );
 }
