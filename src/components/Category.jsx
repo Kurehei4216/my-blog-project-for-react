@@ -1,5 +1,6 @@
 import { Box, List, ListItem, ListItemText, Badge, Card } from "@mui/material";
 import { Link as RouterLink } from "react-router-dom";
+import CategoryIcon from "@mui/icons-material/Category";
 
 const Category = (props) => {
   const { categories } = props;
@@ -10,7 +11,10 @@ const Category = (props) => {
   return (
     <>
       <Box style={categoryStyle}>
-        <div>カテゴリー</div>
+        <div style={{ display: "flex" }}>
+          <CategoryIcon />
+          <span>カテゴリー</span>
+        </div>
         <Card style={{ marginTop: "8px" }}>
           <List>
             {categories.map((category, index) => (
@@ -20,7 +24,6 @@ const Category = (props) => {
                 to={`/category/${`${category.name}`}`}
               >
                 <ListItemText primary={category.name} />
-                <Badge badgeContent={10} color="primary" />
               </ListItem>
             ))}
           </List>
