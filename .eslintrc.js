@@ -24,7 +24,7 @@ module.exports = {
     "prettier/prettier": "warn",
     "react/prop-types": "off",
     "@typescript-eslint/no-unused-vars": "warn",
-    "no-console": "warn",
+    "no-console": "off",
     "react/react-in-jsx-scope": "off",
   },
   settings: {
